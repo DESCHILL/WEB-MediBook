@@ -26,7 +26,17 @@ export function create_catalog_repository(database) {
         `);
         return { total: result.recordsets[0][0].total, items: result.recordsets[1] };
     }
-    return { list_specialties, list_doctors, specialty_exists };
+    async function get_doctor(id) {
+        const pool = await database.get_pool();
+        const result = await pool.request().input('doctor_id', id).query(`
+            SELECT ${doctor_columns} FROM dbo.BacSi b
+            JOIN dbo.TaiKhoan a ON a.tai_khoan_id=b.tai_khoan_id
+            JOIN dbo.ChuyenKhoa c ON c.chuyen_khoa_id=b.chuyen_khoa_id
+            WHERE b.bac_si_id=@doctor_id AND a.hoat_dong=1 AND a.vai_tro='BAC_SI';
+        `);
+        return result.recordset[0];
+    }
+    return { list_specialties, list_doctors, specialty_exists, get_doctor };
 }
 
 const doctor_columns = `CONVERT(varchar(20),b.bac_si_id) AS bac_si_id,a.ho_ten,

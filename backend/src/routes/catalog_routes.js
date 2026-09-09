@@ -4,5 +4,6 @@ export function create_catalog_routes(controller) {
     const router = create_router();
     router.get('/specialties', controller.list_specialties);
     router.get('/doctors', controller.list_doctors);
+    router.get('/doctors/:doctor_id', controller.get_doctor);
     return router;
 }

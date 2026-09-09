@@ -13,7 +13,12 @@ export function create_catalog_service(repository) {
         const result = await repository.list_doctors({ offset: (page - 1) * page_size, page_size, specialty_id });
         return { items: result.items.map(public_doctor), total: result.total, page, page_size };
     }
-    return { list_specialties, list_doctors };
+    async function get_doctor(id) {
+        const doctor = await repository.get_doctor(parse_id(id));
+        if (!doctor) throw catalog_error(404, 'DOCTOR_NOT_FOUND', 'Không tìm thấy bác sĩ hoặc hồ sơ không còn hiển thị.');
+        return public_doctor(doctor);
+    }
+    return { list_specialties, list_doctors, get_doctor };
 }
 
 export function parse_id(value) {

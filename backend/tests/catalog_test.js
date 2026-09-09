@@ -39,3 +39,15 @@ test('lọc chuyên khoa kiểm tra ID, tồn tại và giữ tham số thành c
     for (const value of ['0', '-1', 'abc', '1 OR 1=1', '9223372036854775808']) await request(app).get('/api/doctors').query({ chuyen_khoa_id: value }).expect(400);
     await request(app).get('/api/doctors?chuyen_khoa_id=1&chuyen_khoa_id=2').expect(400);
 });
+
+test('chi tiết bác sĩ trả 404 khi ẩn hoặc không tồn tại, không lộ hồ sơ tài khoản', async () => {
+    const app = create_app({}, { catalog_repository: { get_doctor: async (id) => id === '1' ? {
+        bac_si_id: '1', chuyen_khoa_id: '2', ho_ten: 'Nguyễn An', ten_chuyen_khoa: 'Nội khoa', phi_kham: 150000,
+        email: 'private@example.test', so_dien_thoai: 'private', mat_khau_hash: 'secret',
+    } : undefined } });
+    const result = await request(app).get('/api/doctors/1').expect(200);
+    assert.equal(result.body.doctor.phi_kham, 150000);
+    assert.doesNotMatch(result.text, /secret|private|email|mat_khau|so_dien_thoai/);
+    await request(app).get('/api/doctors/2').expect(404);
+    await request(app).get('/api/doctors/abc').expect(400);
+});
