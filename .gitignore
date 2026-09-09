@@ -1,0 +1,52 @@
+# Credentials and local environment
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pfx
+*.p12
+*.pem
+*.key
+secrets.json
+appsettings.Local.json
+appsettings.*.Local.json
+
+# Installed dependencies and generated output
+node_modules/
+.next/
+.nuxt/
+dist/
+build/
+bin/
+obj/
+coverage/
+TestResults/
+.venv/
+__pycache__/
+*.pyc
+
+# SQL Server data and backups
+*.mdf
+*.ndf
+*.ldf
+*.bak
+*.trn
+*.bacpac
+
+# Private data and local files
+private/
+local_data/
+uploads/
+backups/
+*.log
+*.tmp
+~$*
+*.asd
+*.wbk
+.DS_Store
+Thumbs.db
+.vs/
+.idea/
+.vscode/
+
+# Keep intended report and diagram exports versioned
