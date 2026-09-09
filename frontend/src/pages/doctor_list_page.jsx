@@ -1,6 +1,7 @@
 import { use_catalog } from '../hooks/use_catalog.js';
 import Doctor_card from '../components/doctor_card.jsx';
 import Request_state from '../components/request_state.jsx';
+import Specialty_filter from '../components/specialty_filter.jsx';
 
 export default function doctor_list_page({ search = '' }) {
     const parameters = new URLSearchParams(search);
@@ -10,7 +11,7 @@ export default function doctor_list_page({ search = '' }) {
     return <main className="public_main doctor_list_page">
         <h1 className="page_intro">Xem danh sách các bác sĩ chuyên khoa.</h1>
         <div className="catalog_layout">
-            <aside className="specialty_sidebar"><a className="filter_option selected" href="/bac_si">Tất cả bác sĩ</a></aside>
+            <Specialty_filter selected_id={parameters.get('chuyen_khoa_id')} />
             <section aria-label="Danh sách bác sĩ" aria-busy={state.loading}>
                 <Request_state {...state} empty={data?.items.length === 0} empty_message="Chưa có bác sĩ phù hợp." />
                 {data && <><div className="doctor_grid">{data.items.map((doctor) => <Doctor_card key={doctor.bac_si_id} doctor={doctor} />)}</div>

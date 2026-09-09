@@ -8,20 +8,25 @@ export function create_catalog_repository(database) {
         `);
         return result.recordset;
     }
-    async function list_doctors({ offset, page_size }) {
+    async function specialty_exists(specialty_id) {
         const pool = await database.get_pool();
-        const result = await pool.request().input('offset', offset).input('page_size', page_size).query(`
+        const result = await pool.request().input('specialty_id', specialty_id).query('SELECT chuyen_khoa_id FROM dbo.ChuyenKhoa WHERE chuyen_khoa_id=@specialty_id;');
+        return result.recordset.length > 0;
+    }
+    async function list_doctors({ offset, page_size, specialty_id }) {
+        const pool = await database.get_pool();
+        const result = await pool.request().input('offset', offset).input('page_size', page_size).input('specialty_id', specialty_id).query(`
             SELECT COUNT(*) AS total FROM dbo.BacSi b JOIN dbo.TaiKhoan a ON a.tai_khoan_id=b.tai_khoan_id
-            WHERE a.hoat_dong=1 AND a.vai_tro='BAC_SI';
+            WHERE a.hoat_dong=1 AND a.vai_tro='BAC_SI' AND (@specialty_id IS NULL OR b.chuyen_khoa_id=@specialty_id);
             SELECT ${doctor_columns} FROM dbo.BacSi b
             JOIN dbo.TaiKhoan a ON a.tai_khoan_id=b.tai_khoan_id
             JOIN dbo.ChuyenKhoa c ON c.chuyen_khoa_id=b.chuyen_khoa_id
-            WHERE a.hoat_dong=1 AND a.vai_tro='BAC_SI'
+            WHERE a.hoat_dong=1 AND a.vai_tro='BAC_SI' AND (@specialty_id IS NULL OR b.chuyen_khoa_id=@specialty_id)
             ORDER BY b.bac_si_id OFFSET @offset ROWS FETCH NEXT @page_size ROWS ONLY;
         `);
         return { total: result.recordsets[0][0].total, items: result.recordsets[1] };
     }
-    return { list_specialties, list_doctors };
+    return { list_specialties, list_doctors, specialty_exists };
 }
 
 const doctor_columns = `CONVERT(varchar(20),b.bac_si_id) AS bac_si_id,a.ho_ten,

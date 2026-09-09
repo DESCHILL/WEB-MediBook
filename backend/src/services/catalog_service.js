@@ -5,13 +5,20 @@ export function catalog_error(status, code, message) {
 export function create_catalog_service(repository) {
     async function list_specialties() { return repository.list_specialties(); }
     async function list_doctors(query) {
-        if (Object.keys(query).some((key) => !['page', 'page_size'].includes(key))) throw catalog_error(400, 'INVALID_FILTER', 'Bộ lọc không hợp lệ.');
+        if (Object.keys(query).some((key) => !['page', 'page_size', 'chuyen_khoa_id'].includes(key))) throw catalog_error(400, 'INVALID_FILTER', 'Bộ lọc không hợp lệ.');
         const page = parse_page(query.page, 1, 10000);
         const page_size = parse_page(query.page_size, 12, 24);
-        const result = await repository.list_doctors({ offset: (page - 1) * page_size, page_size });
+        const specialty_id = query.chuyen_khoa_id === undefined ? null : parse_id(query.chuyen_khoa_id);
+        if (specialty_id && !(await repository.specialty_exists(specialty_id))) throw catalog_error(404, 'SPECIALTY_NOT_FOUND', 'Chuyên khoa không tồn tại. Vui lòng chọn lại.');
+        const result = await repository.list_doctors({ offset: (page - 1) * page_size, page_size, specialty_id });
         return { items: result.items.map(public_doctor), total: result.total, page, page_size };
     }
     return { list_specialties, list_doctors };
+}
+
+export function parse_id(value) {
+    if (typeof value !== 'string' || !/^[1-9]\d{0,18}$/.test(value) || BigInt(value) > 9223372036854775807n) throw catalog_error(400, 'INVALID_ID', 'Mã dữ liệu không hợp lệ.');
+    return value;
 }
 
 function parse_page(value, fallback, maximum) {

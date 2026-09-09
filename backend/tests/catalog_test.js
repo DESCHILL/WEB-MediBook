@@ -21,8 +21,21 @@ test('danh sách công khai phân trang và chỉ trả các trường công kha
         return { items: [{ bac_si_id: '9007199254740993', chuyen_khoa_id: '1', ho_ten: 'Bác sĩ mẫu', email: 'private@example.test', mat_khau_hash: 'secret' }], total: 25 };
     } } });
     const result = await request(app).get('/api/doctors?page=2&page_size=12').expect(200);
-    assert.deepEqual(input, { offset: 12, page_size: 12 });
+    assert.deepEqual(input, { offset: 12, page_size: 12, specialty_id: null });
     assert.equal(result.body.items[0].bac_si_id, '9007199254740993');
     assert.doesNotMatch(result.text, /secret|private|email|mat_khau/);
     for (const query of ['page=0', 'page=-1', 'page=1.1', 'page_size=1000', 'page=1&page=2', 'order_by=password']) await request(app).get(`/api/doctors?${query}`).expect(400);
+});
+
+test('lọc chuyên khoa kiểm tra ID, tồn tại và giữ tham số thành chuỗi an toàn', async () => {
+    let input;
+    const app = create_app({}, { catalog_repository: {
+        specialty_exists: async (id) => id === '2',
+        list_doctors: async (value) => { input = value; return { items: [], total: 0 }; },
+    } });
+    await request(app).get('/api/doctors?chuyen_khoa_id=2').expect(200);
+    assert.equal(input.specialty_id, '2');
+    await request(app).get('/api/doctors?chuyen_khoa_id=3').expect(404);
+    for (const value of ['0', '-1', 'abc', '1 OR 1=1', '9223372036854775808']) await request(app).get('/api/doctors').query({ chuyen_khoa_id: value }).expect(400);
+    await request(app).get('/api/doctors?chuyen_khoa_id=1&chuyen_khoa_id=2').expect(400);
 });
