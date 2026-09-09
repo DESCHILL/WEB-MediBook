@@ -4,14 +4,19 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node --env-file-if-exists=.env --watch src/server.js",
+    "dev": "node --env-file-if-exists=.env --watch-path=src src/server.js",
     "start": "node --env-file-if-exists=.env src/server.js",
     "test": "node --test tests/*_test.js",
+    "test:database": "node --env-file-if-exists=.env --test tests/auth_database_test.js",
     "check:database": "node --env-file-if-exists=.env scripts/check_database.js"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
     "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
     "msnodesqlv8": "^5.3.0",
     "mssql": "^12.7.1"
   },

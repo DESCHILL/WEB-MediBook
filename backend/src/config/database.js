@@ -16,7 +16,7 @@ export function create_database(config) {
     }
 
     async function connect_pool() {
-        const driver_name = config.db_auth === 'windows' ? 'mssql/msnodesqlv8.js' : 'mssql';
+        const driver_name = 'mssql/msnodesqlv8.js';
         const { default: sql } = await import(driver_name);
         let options;
         if (config.db_auth === 'windows') {
@@ -30,16 +30,16 @@ export function create_database(config) {
             ].join(';');
             options = { connectionString: connection_string };
         } else {
-            options = {
-                server: config.db_server,
-                database: config.db_database,
-                user: config.db_user,
-                password: config.db_password,
-                options: {
-                    encrypt: config.db_encrypt,
-                    trustServerCertificate: config.db_trust_certificate,
-                },
-            };
+            const connection_string = [
+                `Driver=${escape_odbc_value(config.db_driver)}`,
+                `Server=${escape_odbc_value(config.db_server)}`,
+                `Database=${escape_odbc_value(config.db_database)}`,
+                `UID=${escape_odbc_value(config.db_user)}`,
+                `PWD=${escape_odbc_value(config.db_password)}`,
+                `Encrypt=${config.db_encrypt ? 'Yes' : 'No'}`,
+                `TrustServerCertificate=${config.db_trust_certificate ? 'Yes' : 'No'}`,
+            ].join(';');
+            options = { connectionString: connection_string };
         }
         const pool = new sql.ConnectionPool({
             ...options,
