@@ -13,3 +13,16 @@ test('lỗi truy vấn danh mục không lộ chuỗi kết nối', async () => 
     const response = await request(app).get('/api/specialties').expect(500);
     assert.doesNotMatch(response.text, /secret|password/);
 });
+
+test('danh sách công khai phân trang và chỉ trả các trường công khai', async () => {
+    let input;
+    const app = create_app({}, { catalog_repository: { list_doctors: async (value) => {
+        input = value;
+        return { items: [{ bac_si_id: '9007199254740993', chuyen_khoa_id: '1', ho_ten: 'Bác sĩ mẫu', email: 'private@example.test', mat_khau_hash: 'secret' }], total: 25 };
+    } } });
+    const result = await request(app).get('/api/doctors?page=2&page_size=12').expect(200);
+    assert.deepEqual(input, { offset: 12, page_size: 12 });
+    assert.equal(result.body.items[0].bac_si_id, '9007199254740993');
+    assert.doesNotMatch(result.text, /secret|private|email|mat_khau/);
+    for (const query of ['page=0', 'page=-1', 'page=1.1', 'page_size=1000', 'page=1&page=2', 'order_by=password']) await request(app).get(`/api/doctors?${query}`).expect(400);
+});

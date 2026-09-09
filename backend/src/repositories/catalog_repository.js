@@ -8,5 +8,22 @@ export function create_catalog_repository(database) {
         `);
         return result.recordset;
     }
-    return { list_specialties };
+    async function list_doctors({ offset, page_size }) {
+        const pool = await database.get_pool();
+        const result = await pool.request().input('offset', offset).input('page_size', page_size).query(`
+            SELECT COUNT(*) AS total FROM dbo.BacSi b JOIN dbo.TaiKhoan a ON a.tai_khoan_id=b.tai_khoan_id
+            WHERE a.hoat_dong=1 AND a.vai_tro='BAC_SI';
+            SELECT ${doctor_columns} FROM dbo.BacSi b
+            JOIN dbo.TaiKhoan a ON a.tai_khoan_id=b.tai_khoan_id
+            JOIN dbo.ChuyenKhoa c ON c.chuyen_khoa_id=b.chuyen_khoa_id
+            WHERE a.hoat_dong=1 AND a.vai_tro='BAC_SI'
+            ORDER BY b.bac_si_id OFFSET @offset ROWS FETCH NEXT @page_size ROWS ONLY;
+        `);
+        return { total: result.recordsets[0][0].total, items: result.recordsets[1] };
+    }
+    return { list_specialties, list_doctors };
 }
+
+const doctor_columns = `CONVERT(varchar(20),b.bac_si_id) AS bac_si_id,a.ho_ten,
+    CONVERT(varchar(20),b.chuyen_khoa_id) AS chuyen_khoa_id,c.ten_chuyen_khoa,
+    b.anh_dai_dien,b.bang_cap,b.kinh_nghiem,b.gioi_thieu,b.dia_chi_kham,b.phi_kham`;
