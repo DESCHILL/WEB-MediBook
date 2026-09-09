@@ -1,6 +1,10 @@
 import express from 'express';
 import helmet from 'helmet';
 import cookie_parser from 'cookie-parser';
+import { create_catalog_repository } from './repositories/catalog_repository.js';
+import { create_catalog_service } from './services/catalog_service.js';
+import { create_catalog_controller } from './controllers/catalog_controller.js';
+import { create_catalog_routes } from './routes/catalog_routes.js';
 import { create_auth_repository } from './repositories/auth_repository.js';
 import { create_auth_service } from './services/auth_service.js';
 import { create_auth_controller } from './controllers/auth_controller.js';
@@ -10,12 +14,14 @@ import { create_health_service } from './services/health_service.js';
 import { create_health_controller } from './controllers/health_controller.js';
 import { create_health_routes } from './routes/health_routes.js';
 
-export function create_app(database, { auth_config = {}, auth_repository } = {}) {
+export function create_app(database, { auth_config = {}, auth_repository, catalog_repository } = {}) {
     const app = express();
     app.disable('x-powered-by');
     app.use(helmet());
     app.use(express.json({ limit: '32kb' }));
     app.use(cookie_parser());
+    const catalog_service = create_catalog_service(catalog_repository ?? create_catalog_repository(database));
+    app.use('/api', create_catalog_routes(create_catalog_controller(catalog_service)));
     const auth_service = create_auth_service(auth_repository ?? create_auth_repository(database), auth_config);
     app.use('/api/auth', create_auth_routes(create_auth_controller(auth_service, auth_config), auth_service, auth_config));
     const repository = create_health_repository(database);
