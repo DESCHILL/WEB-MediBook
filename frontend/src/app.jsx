@@ -8,6 +8,7 @@ import Auth_page from './pages/auth_page.jsx';
 import Account_page from './pages/account_page.jsx';
 import Appointment_page from './pages/appointment_page.jsx';
 import Doctor_workspace from './pages/doctor_workspace.jsx';
+import Admin_workspace from './pages/admin_workspace.jsx';
 import { use_auth } from './hooks/use_auth.js';
 
 export default function app() {
@@ -17,6 +18,7 @@ export default function app() {
     const auth_page = ['/dang_nhap', '/dang_ky'].includes(path);
     let page;
     if (path === '/') page = <Home_page />;
+    else if(path==='/quan_tri'||path.startsWith('/quan_tri/'))page=<Admin_workspace auth={auth} path={path}/>;
     else if (path === '/chuyen_khoa') page = <Specialty_page />;
     else if (path === '/bac_si') page = <Doctor_list_page search={window.location.search} />;
     else if(['/bac_si/lich_hen','/bac_si/benh_nhan'].includes(path)) page=<Doctor_workspace auth={auth} path={path}/>;
@@ -25,5 +27,5 @@ export default function app() {
     else if (auth_page) page = <Auth_page registration={path === '/dang_ky'} auth={auth} />;
     else if (path === '/tai_khoan') page = <Account_page auth={auth} />;
     else page = <main className="public_main request_state"><h1>Không tìm thấy trang</h1><a className="soft_button" href="/">Về trang chủ</a></main>;
-    return <><Site_header {...auth} path={path} />{auth.error && <p className="global_error" role="alert">{auth.error}</p>}{page}{!auth_page && <Site_footer />}</>;
+    return <><Site_header {...auth} path={path} />{auth.error && <p className="global_error" role="alert">{auth.error}</p>}{page}{!auth_page && !path.startsWith('/quan_tri') && !['/bac_si/lich_hen','/bac_si/benh_nhan'].includes(path) && <Site_footer />}</>;
 }

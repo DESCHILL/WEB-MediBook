@@ -169,3 +169,22 @@ a { color: inherit; }
 .calendar_row>span { border-right: 1px solid #dfe1e6; padding: 8px; color: #6b7280; font-size: 12px; }
 .calendar_row a { display: block; background: #e8e8ff; color: #444494; padding: 9px; text-decoration: none; }
 @media(max-width:720px) { .workspace_layout { grid-template-columns: 1fr; }.workspace_sidebar { border: 0; padding: 4px 0; }.workspace_sidebar nav { display: flex; flex-wrap: wrap; }.workspace_sidebar a { padding: 12px; }.workspace_main { padding: 16px; } }
+.admin_form { max-width: 760px; background: white; border: 1px solid #e1e4ec; padding: 25px; margin: 25px 0; border-radius: 4px; }
+.admin_form_grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.admin_form label { display: block; color: #5a6480; font-size: 13px; margin: 12px 0; }
+.admin_form input,.admin_form select,.admin_form textarea { display: block; width: 100%; padding: 10px; border: 1px solid #d9dce3; margin-top: 8px; font: inherit; border-radius: 3px; }
+.admin_form textarea { min-height: 85px; }
+.admin_form .primary_button { width: auto; margin-top: 20px; padding: 12px 25px; border-radius: 24px; }
+.image_upload { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+.image_upload img { width: 85px; height: 85px; object-fit: cover; border-radius: 8px; }
+.dashboard_counts,.specialty_admin_grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; max-width: 800px; margin: 20px 0; }
+.dashboard_counts article,.specialty_admin_grid article,.specialty_add { background: white; padding: 22px; border: 1px solid #eceef4; border-radius: 5px; }
+.dashboard_counts strong { display: block; font-size: 25px; color: #535d79; }
+.dashboard_counts span { color: #7c88a5; font-size: 14px; }
+.specialty_admin_grid h2 { font-size: 16px; }
+.specialty_admin_grid .soft_button { font-size: 12px; padding: 7px; margin-right: 5px; }
+.admin_appointment_row { display: grid; grid-template-columns: 1.3fr 1fr 160px; gap: 18px; border-bottom: 1px solid #ddd; padding: 18px 0; }
+.admin_appointment_row h2 { font-size: 15px; font-weight: 500; }
+.admin_appointment_row p { font-size: 13px; color: #59647e; }
+.role_badge { border: 1px solid #c5c7ce; border-radius: 15px; font-size: 11px; padding: 3px 12px; margin-right: auto; }
+@media(max-width:720px) { .admin_form_grid,.dashboard_counts,.specialty_admin_grid { grid-template-columns: 1fr; }.admin_appointment_row { grid-template-columns: 1fr 1fr; }.admin_form { padding: 16px; } }

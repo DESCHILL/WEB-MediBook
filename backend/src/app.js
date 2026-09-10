@@ -1,6 +1,11 @@
 import express from 'express';
 import helmet from 'helmet';
 import cookie_parser from 'cookie-parser';
+import {create_upload_routes,upload_directory} from './routes/upload_routes.js';
+import {create_admin_repository} from './repositories/admin_repository.js';
+import {create_admin_service} from './services/admin_service.js';
+import {create_admin_controller} from './controllers/admin_controller.js';
+import {create_admin_routes} from './routes/admin_routes.js';
 import {create_doctor_repository} from './repositories/doctor_repository.js';
 import {create_doctor_service} from './services/doctor_service.js';
 import {create_doctor_controller} from './controllers/doctor_controller.js';
@@ -39,12 +44,15 @@ export function create_app(database, { auth_config = {}, auth_repository, catalo
     const catalog_service = create_catalog_service(catalog_repository ?? create_catalog_repository(database));
     app.use('/api', create_catalog_routes(create_catalog_controller(catalog_service)));
     const auth_service = create_auth_service(auth_repository ?? create_auth_repository(database), auth_config);
+    app.use('/uploads',express.static(upload_directory,{dotfiles:'deny',index:false}));
+    app.use('/api/uploads',create_upload_routes(auth_service,auth_config));
     app.use('/api/auth', create_auth_routes(create_auth_controller(auth_service, auth_config), auth_service, auth_config));
     const appointment_service = create_appointment_service(appointment_repository ?? create_appointment_repository(database));
     app.use('/api', create_appointment_routes(create_appointment_controller(appointment_service), auth_service, auth_config));
     app.use('/api/admin/doctors',create_schedule_routes(create_schedule_controller(create_schedule_service(create_schedule_repository(database))),auth_service,auth_config));
     app.use('/api/profile',create_profile_routes(create_profile_controller(create_profile_service(create_profile_repository(database))),auth_service,auth_config));
     app.use('/api/doctor',create_doctor_routes(create_doctor_controller(create_doctor_service(create_doctor_repository(database))),auth_service,auth_config));
+    app.use('/api/admin',create_admin_routes(create_admin_controller(create_admin_service(create_admin_repository(database))),auth_service,auth_config));
     const repository = create_health_repository(database);
     const service = create_health_service(repository);
     const controller = create_health_controller(service);
