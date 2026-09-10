@@ -9,7 +9,9 @@
     "test": "node --test tests/*_test.js",
     "test:database": "node --env-file-if-exists=.env --test --test-concurrency=1 tests/*_database_test.js",
     "check:database": "node --env-file-if-exists=.env scripts/check_database.js",
-    "seed:catalog": "node --env-file-if-exists=.env scripts/seed_catalog.js"
+    "seed:catalog": "node --env-file-if-exists=.env scripts/seed_catalog.js",
+    "seed:schedules": "node --env-file-if-exists=.env scripts/seed_schedules.js",
+    "seed:accounts": "node --env-file-if-exists=.env scripts/seed_demo_accounts.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

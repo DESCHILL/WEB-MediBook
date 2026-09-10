@@ -188,3 +188,19 @@ a { color: inherit; }
 .admin_appointment_row p { font-size: 13px; color: #59647e; }
 .role_badge { border: 1px solid #c5c7ce; border-radius: 15px; font-size: 11px; padding: 3px 12px; margin-right: auto; }
 @media(max-width:720px) { .admin_form_grid,.dashboard_counts,.specialty_admin_grid { grid-template-columns: 1fr; }.admin_appointment_row { grid-template-columns: 1fr 1fr; }.admin_form { padding: 16px; } }
+.calendar_week { border-collapse: collapse; width: 100%; min-width: 760px; background: #f3f4f6; table-layout: fixed; font-size: 12px; }
+.calendar_week th,.calendar_week td { border: 1px solid #d9dce2; height: 35px; vertical-align: top; padding: 5px; }
+.calendar_week th { font-weight: 400; color: #66707f; }
+.calendar_week th:first-child { width: 58px; }
+.calendar_week td a { display: block; color: #44458f; background: #e6e7ff; padding: 5px; border-radius: 3px; text-decoration: none; overflow-wrap: anywhere; }
+.site_header.workspace_header { width: 100%; max-width: none; margin: 0; padding: 14px 24px; }
+.admin_form_grid:has(.doctor_field) { gap: 10px 22px; }
+.doctor_field.ho_ten { grid-area: 1 / 1; }.doctor_field.email { grid-area: 2 / 1; }.doctor_field.mat_khau { grid-area: 3 / 1; }.doctor_field.kinh_nghiem { grid-area: 4 / 1; }.doctor_field.phi_kham { grid-area: 5 / 1; }
+.doctor_field.chuyen_khoa { grid-area: 1 / 2; }.doctor_field.bang_cap { grid-area: 2 / 2; }.doctor_field.dia_chi_kham { grid-area: 3 / 2 / 5 / 3; }.doctor_field.gioi_thieu { grid-area: 6 / 1 / 7 / 3; }
+.admin_form .doctor_field { margin: 3px 0; }.admin_form .doctor_field input,.admin_form .doctor_field select { padding: 8px; }
+@media(max-width:720px) { .doctor_field.ho_ten,.doctor_field.email,.doctor_field.mat_khau,.doctor_field.kinh_nghiem,.doctor_field.phi_kham,.doctor_field.chuyen_khoa,.doctor_field.bang_cap,.doctor_field.dia_chi_kham,.doctor_field.gioi_thieu { grid-area: auto; } }
+.account_menu { position: relative; margin-left: auto; font-size: 13px; }
+.account_menu summary { max-width: 190px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; color: #535d71; padding: 10px; }
+.account_menu>div { position: absolute; z-index: 20; top: 100%; right: 0; min-width: 185px; background: #f8f8fc; border: 1px solid #ececf1; padding: 8px; box-shadow: 0 6px 20px #25254712; }
+.account_menu a,.account_menu button { display: block; width: 100%; padding: 10px; color: #535d71; text-decoration: none; text-align: left; background: none; border: 0; font: inherit; cursor: pointer; }
+.account_menu a:hover,.account_menu button:hover { background: #ededfa; }
