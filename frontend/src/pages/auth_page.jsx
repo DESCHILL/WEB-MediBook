@@ -28,7 +28,7 @@ export default function auth_page({ registration, auth }) {
             const data = await send_auth_request(register ? 'register' : 'login', { email: email.trim(), mat_khau, ...(register ? { ho_ten: ho_ten.trim() } : {}) });
             set_mat_khau('');
             if (register) { window.history.replaceState({}, '', '/dang_nhap'); set_register(false); set_notice(data.message); }
-            else window.location.assign(next_path);
+            else window.location.assign(data.account.vai_tro==='BAC_SI'?'/bac_si/lich_hen':data.account.vai_tro==='ADMIN'?'/quan_tri':next_path);
         } catch (failure) { set_error(failure.message); set_fields(failure.fields ?? {}); }
         finally { set_pending(false); }
     }

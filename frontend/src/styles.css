@@ -150,3 +150,22 @@ a { color: inherit; }
 .profile_field input,.profile_field select { min-width: 0; width: 100%; padding: 9px; border: 1px solid #d0d4de; border-radius: 5px; font: inherit; }
 .profile_field .field_error { grid-column: 2; margin: 0; color: #c72323; }
 .profile_content .soft_button { border-radius: 24px; margin: 20px 10px 0 0; }
+.workspace_layout { display: grid; grid-template-columns: 210px minmax(0,1fr); min-height: 75vh; border-top: 1px solid #e2e5ed; }
+.workspace_sidebar { border-right: 1px solid #e2e5ed; padding: 24px 0; }
+.workspace_sidebar a { display: block; padding: 15px 22px; text-decoration: none; color: #586174; font-size: 14px; }
+.workspace_sidebar a[aria-current=page] { background: #f1f0ff; border-right: 3px solid #6664ff; }
+.workspace_main { background: #f7f8fc; padding: 28px; }
+.workspace_main h1 { font-size: 21px; font-weight: 500; }
+.workspace_table { background: white; border: 1px solid #e1e4eb; border-collapse: collapse; width: 100%; font-size: 13px; }
+.workspace_table th,.workspace_table td { border-bottom: 1px solid #eceef3; text-align: left; padding: 14px 12px; }
+.workspace_table th { font-weight: 500; }
+.table_scroll { overflow-x: auto; }
+.result_form textarea { display: block; width: 100%; min-width: 180px; min-height: 42px; border: 1px solid #b9bdc6; border-radius: 5px; margin-bottom: 7px; font: inherit; }
+.result_form button { font-size: 12px; padding: 6px 10px; }
+.calendar_date { display: block; margin: 20px 0; }
+.calendar_date input { margin-left: 12px; padding: 8px; border: 1px solid #ddd; }
+.doctor_calendar { border: 1px solid #d9dce2; background: #f3f4f6; }
+.calendar_row { display: grid; grid-template-columns: 70px 1fr; min-height: 40px; border-bottom: 1px solid #dfe1e6; }
+.calendar_row>span { border-right: 1px solid #dfe1e6; padding: 8px; color: #6b7280; font-size: 12px; }
+.calendar_row a { display: block; background: #e8e8ff; color: #444494; padding: 9px; text-decoration: none; }
+@media(max-width:720px) { .workspace_layout { grid-template-columns: 1fr; }.workspace_sidebar { border: 0; padding: 4px 0; }.workspace_sidebar nav { display: flex; flex-wrap: wrap; }.workspace_sidebar a { padding: 12px; }.workspace_main { padding: 16px; } }
