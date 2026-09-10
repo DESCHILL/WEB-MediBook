@@ -8,6 +8,10 @@ Database: `MediBook`
 
 Database gồm 8 bảng nghiệp vụ, 10 khóa ngoại và chỉ mục duy nhất có điều kiện để không có hai lịch chưa hủy trong cùng khung giờ.
 
+Module JWT bổ sung bảng kỹ thuật PhienDangNhap qua `migrations/03_create_auth_sessions.sql`. Bảng này liên kết TaiKhoan, lưu thời gian UTC và hỗ trợ vô hiệu hóa JWT khi đăng xuất. Thêm bảng vào ERD triển khai khi đồng bộ tài liệu.
+
+Máy phát triển hiện đã dùng SQL Server Authentication. Cấu hình cụ thể nằm trong backend/.env cục bộ. Hướng dẫn Windows Authentication bên dưới vẫn dùng được cho chạy schema/migration bằng tài khoản quản trị Windows. Không cấp quyền quản trị server cho tài khoản kết nối ứng dụng.
+
 ## Tạo ERD bằng SSMS
 
 1. Kết nối đến server ở trên.
