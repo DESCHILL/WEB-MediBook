@@ -7,8 +7,9 @@
     "dev": "node --env-file-if-exists=.env --watch-path=src src/server.js",
     "start": "node --env-file-if-exists=.env src/server.js",
     "test": "node --test tests/*_test.js",
-    "test:database": "node --env-file-if-exists=.env --test tests/auth_database_test.js",
-    "check:database": "node --env-file-if-exists=.env scripts/check_database.js"
+    "test:database": "node --env-file-if-exists=.env --test --test-concurrency=1 tests/*_database_test.js",
+    "check:database": "node --env-file-if-exists=.env scripts/check_database.js",
+    "seed:catalog": "node --env-file-if-exists=.env scripts/seed_catalog.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
