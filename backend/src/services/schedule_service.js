@@ -1,4 +1,4 @@
-import { parse_resource_id } from './appointment_service.js';
+import { parse_resource_id } from './resource_id_service.js';
 import { auth_error } from './auth_service.js';
 function invalid() { return auth_error(400, 'INVALID_SCHEDULE', 'Lịch làm việc cần thứ 2–8, giờ HH:mm theo bước 30 phút; ngày bắt đầu hợp lệ và số ngày từ 1–31.'); }
 export function create_schedule_service(repository) {

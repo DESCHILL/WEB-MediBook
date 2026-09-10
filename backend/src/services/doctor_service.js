@@ -1,5 +1,5 @@
 import {auth_error} from './auth_service.js';
-import {parse_resource_id} from './appointment_service.js';
+import {parse_resource_id} from './resource_id_service.js';
 export function create_doctor_service(repository) {
     async function list(id) {return {items:await repository.list(id)};}
     async function save_result(account_id,id,body) {

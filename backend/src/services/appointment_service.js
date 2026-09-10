@@ -1,10 +1,5 @@
 import { auth_error } from './auth_service.js';
-
-export function parse_resource_id(value) {
-    if (typeof value !== 'string' || !/^[1-9]\d{0,18}$/.test(value) || BigInt(value) > 9223372036854775807n)
-        throw auth_error(400, 'INVALID_ID', 'Mã dữ liệu không hợp lệ.');
-    return value;
-}
+import {parse_resource_id} from './resource_id_service.js';
 function translate_database_error(error) {
     const number = error.number ?? error.originalError?.info?.number;
     if ([51002, 2601, 2627].includes(number)) throw auth_error(409, 'SLOT_UNAVAILABLE', 'Khung giờ vừa được đặt hoặc không còn khả dụng. Vui lòng chọn lại.');

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import {auth_error} from './auth_service.js';
-import {parse_resource_id} from './appointment_service.js';
+import {parse_resource_id} from './resource_id_service.js';
 function invalid(message,fields) {return auth_error(400,'INVALID_INPUT',message,fields);}
 export function create_admin_service(repository) {
     async function run(action) {
