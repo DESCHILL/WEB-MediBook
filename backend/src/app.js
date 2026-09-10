@@ -1,6 +1,10 @@
 import express from 'express';
 import helmet from 'helmet';
 import cookie_parser from 'cookie-parser';
+import { create_profile_repository } from './repositories/profile_repository.js';
+import { create_profile_service } from './services/profile_service.js';
+import { create_profile_controller } from './controllers/profile_controller.js';
+import { create_profile_routes } from './routes/profile_routes.js';
 import { create_schedule_repository } from './repositories/schedule_repository.js';
 import { create_schedule_service } from './services/schedule_service.js';
 import { create_schedule_controller } from './controllers/schedule_controller.js';
@@ -35,6 +39,7 @@ export function create_app(database, { auth_config = {}, auth_repository, catalo
     const appointment_service = create_appointment_service(appointment_repository ?? create_appointment_repository(database));
     app.use('/api', create_appointment_routes(create_appointment_controller(appointment_service), auth_service, auth_config));
     app.use('/api/admin/doctors',create_schedule_routes(create_schedule_controller(create_schedule_service(create_schedule_repository(database))),auth_service,auth_config));
+    app.use('/api/profile',create_profile_routes(create_profile_controller(create_profile_service(create_profile_repository(database))),auth_service,auth_config));
     const repository = create_health_repository(database);
     const service = create_health_service(repository);
     const controller = create_health_controller(service);

@@ -140,3 +140,13 @@ a { color: inherit; }
 .slot_options input { margin-right: 6px; accent-color: #5f6fff; }
 .slot_options .selected_slot { background: #eff0ff; border-color: #5f6fff; }
 @media(max-width: 620px) { .appointment_row { grid-template-columns: 75px 1fr; gap: 12px; } .appointment_row .doctor_portrait { width: 75px; height: 100px; } .appointment_actions { grid-column: 2; justify-self: start; } }
+.profile_page { padding-top: 32px; min-height: 70vh; }
+.profile_content { max-width: 530px; }
+.profile_avatar { width: 90px; height: 90px; background: #e7e4ff; border-radius: 5px; padding: 10px; }
+.profile_content h1 { border-bottom: 1px solid #ddd; padding-bottom: 14px; font-size: 23px; }
+.profile_content h2 { font-size: 13px; font-weight: 400; color: #69717e; text-decoration: underline; }
+.profile_email { font-size: 14px; color: #58657b; }
+.profile_field { display: grid; grid-template-columns: 125px 1fr; align-items: center; gap: 12px; margin: 18px 0; color: #596579; font-size: 14px; }
+.profile_field input,.profile_field select { min-width: 0; width: 100%; padding: 9px; border: 1px solid #d0d4de; border-radius: 5px; font: inherit; }
+.profile_field .field_error { grid-column: 2; margin: 0; color: #c72323; }
+.profile_content .soft_button { border-radius: 24px; margin: 20px 10px 0 0; }
