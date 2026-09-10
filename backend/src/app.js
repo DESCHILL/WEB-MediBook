@@ -1,6 +1,10 @@
 import express from 'express';
 import helmet from 'helmet';
 import cookie_parser from 'cookie-parser';
+import { create_appointment_repository } from './repositories/appointment_repository.js';
+import { create_appointment_service } from './services/appointment_service.js';
+import { create_appointment_controller } from './controllers/appointment_controller.js';
+import { create_appointment_routes } from './routes/appointment_routes.js';
 import { create_catalog_repository } from './repositories/catalog_repository.js';
 import { create_catalog_service } from './services/catalog_service.js';
 import { create_catalog_controller } from './controllers/catalog_controller.js';
@@ -14,7 +18,7 @@ import { create_health_service } from './services/health_service.js';
 import { create_health_controller } from './controllers/health_controller.js';
 import { create_health_routes } from './routes/health_routes.js';
 
-export function create_app(database, { auth_config = {}, auth_repository, catalog_repository } = {}) {
+export function create_app(database, { auth_config = {}, auth_repository, catalog_repository, appointment_repository } = {}) {
     const app = express();
     app.disable('x-powered-by');
     app.use(helmet());
@@ -24,6 +28,8 @@ export function create_app(database, { auth_config = {}, auth_repository, catalo
     app.use('/api', create_catalog_routes(create_catalog_controller(catalog_service)));
     const auth_service = create_auth_service(auth_repository ?? create_auth_repository(database), auth_config);
     app.use('/api/auth', create_auth_routes(create_auth_controller(auth_service, auth_config), auth_service, auth_config));
+    const appointment_service = create_appointment_service(appointment_repository ?? create_appointment_repository(database));
+    app.use('/api', create_appointment_routes(create_appointment_controller(appointment_service), auth_service, auth_config));
     const repository = create_health_repository(database);
     const service = create_health_service(repository);
     const controller = create_health_controller(service);

@@ -116,3 +116,27 @@ a { color: inherit; }
 @media (max-width: 1000px) { .site_header, .public_main, .site_footer { width: 90%; }.site_header { gap: 15px; }.site_header nav { gap: 16px; }.hero { min-height: 350px; }.hero_copy { padding-left: 5%; }.doctor_grid { grid-template-columns: repeat(3,minmax(0,1fr)); }.home_doctor_grid { grid-template-columns: repeat(4,minmax(0,1fr)); }.catalog_layout { grid-template-columns: 160px minmax(0,1fr); gap: 18px; }.join_banner h2 { font-size: 26px; } }
 @media (max-width: 720px) { .site_header { flex-wrap: wrap; padding: 14px 0; gap: 16px; }.site_header .main_navigation { display: flex; order: 3; width: 100%; justify-content: space-between; gap: 12px; font-size: 10px; padding: 6px 0; }.header_account { margin-left: auto; gap: 10px; }.account_link { max-width: 90px; }.hero { min-height: 300px; }.hero_copy { padding: 30px 5%; width: 64%; }.hero_copy p { font-size: 11px; }.hero h1 { font-size: 26px; }.hero_art { right: -6%; width: 49%; opacity: .9; }.white_button { padding: 11px 18px; }.specialty_list { gap: 20px 12px; }.specialty_item { width: 86px; font-size: 11px; }.specialty_icon { width: 65px; height: 65px; }.public_main h2 { font-size: 23px; }.catalog_layout { display: block; }.specialty_sidebar { flex-direction: row; flex-wrap: nowrap; overflow-x: auto; padding: 2px 1px 18px; margin-bottom: 12px; }.filter_option { flex-shrink: 0; white-space: nowrap; }.doctor_grid, .home_doctor_grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px 12px; }.public_main { padding-top: 32px; }.home_page { padding-top: 18px; }.doctor_profile { grid-template-columns: 1fr; gap: 18px; }.doctor_profile .doctor_portrait { min-height: 0; height: 250px; }.doctor_profile .doctor_portrait svg { max-width: 200px; }.doctor_info { padding: 22px; }.doctor_info h1 { font-size: 23px; }.doctor_info h2 { font-size: 16px; }.join_banner { margin: 65px 0 0; min-height: 230px; padding: 30px 6%; }.join_banner h2 { font-size: 23px; }.join_art { right: -8%; width: 47%; }.join_banner > div { max-width: 70%; }.footer_columns { grid-template-columns: 1fr 1fr; gap: 25px; }.footer_columns > div:first-child { grid-column: 1 / -1; }.site_footer { padding-top: 70px; }.auth_main, .auth_main.registration { padding-top: 45px; } }
 @media (prefers-reduced-motion: reduce) { .doctor_card, .specialty_item { transition: none; } }
+.appointment_page { padding-top: 58px; min-height: 65vh; }
+.appointment_page h1 { font-size: 21px; font-weight: 500; margin-bottom: 22px; }
+.appointment_row { display: grid; grid-template-columns: 100px 1fr 170px; gap: 20px; padding: 18px 0; border-top: 1px solid #e2e4e8; }
+.appointment_row .doctor_portrait { width: 100px; height: 130px; background: #eef0ff; }
+.appointment_info h2 { font-size: 16px; margin: 0 0 8px; }
+.appointment_info h2 a { color: inherit; text-decoration: none; }
+.appointment_info p { font-size: 13px; color: #566174; margin: 7px 0; }
+.appointment_actions { align-self: center; display: grid; gap: 10px; text-align: center; }
+.appointment_status { font-size: 13px; color: #4e596a; }
+.appointment_status.completed { color: #16833c; }
+.cancel_button { background: #df2424; color: white; padding: 11px 15px; border: 0; border-radius: 3px; cursor: pointer; }
+.cancel_button:disabled { opacity: .6; cursor: wait; }
+.cancel_confirmation { display: grid; gap: 8px; font-size: 13px; }
+.examination_content { white-space: pre-wrap; overflow-wrap: anywhere; }
+.booking_section { margin: 32px 0 45px; max-width: 680px; }
+.booking_section h2 { font-size: 21px; }
+.booking_section input[type=date] { display: block; padding: 12px; border: 1px solid #d6d8df; border-radius: 7px; margin: 10px 0 20px; font: inherit; }
+.booking_section .primary_button { width: auto; padding: 14px 35px; border-radius: 25px; }
+.slot_options { display: flex; flex-wrap: wrap; gap: 10px; border: 0; padding: 0; margin: 18px 0 24px; }
+.slot_options legend { margin-bottom: 15px; color: #5a6372; }
+.slot_options label { border: 1px solid #dfe1e9; border-radius: 24px; padding: 10px 15px; cursor: pointer; }
+.slot_options input { margin-right: 6px; accent-color: #5f6fff; }
+.slot_options .selected_slot { background: #eff0ff; border-color: #5f6fff; }
+@media(max-width: 620px) { .appointment_row { grid-template-columns: 75px 1fr; gap: 12px; } .appointment_row .doctor_portrait { width: 75px; height: 100px; } .appointment_actions { grid-column: 2; justify-self: start; } }
