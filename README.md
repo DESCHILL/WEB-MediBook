@@ -40,6 +40,8 @@ WEB-MediBook/
 
 ## Bắt đầu
 
+Tính năng email mới: bệnh nhân phải xác minh hộp thư; bác sĩ do Admin tạo nhận liên kết tự đặt mật khẩu; đặt khám tạo email xác nhận trong cùng giao dịch. Chạy migration `04_email_verification.sql` sau migration 03, rồi xem [cấu hình Gmail](docs/project/gmail_setup.md) và [đặc tả email](docs/architecture/email_api.md). Các tài khoản bệnh nhân/bác sĩ demo dùng `example.test` không tự được xác minh.
+
 Yêu cầu Node.js 24, SQL Server Express và Microsoft ODBC Driver 18 for SQL Server cho chế độ Windows Authentication mặc định.
 
 Tại thư mục gốc, chạy trong PowerShell:
