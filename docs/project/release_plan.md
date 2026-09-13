@@ -1,17 +1,17 @@
 # Kế hoạch 8 đợt bàn giao
 
-Người dùng yêu cầu tiếp tục toàn bộ đồ án, commit tiếng Việt và chỉ push từng đợt khi được yêu cầu. Mỗi chức năng có một issue trên GitHub. Tạo issue không đồng nghĩa đã push mã nguồn.
+Người dùng yêu cầu tiếp tục toàn bộ đồ án, commit tiếng Việt và chỉ push từng đợt khi được yêu cầu. Giữ nguyên issue #1–#10; các chức năng còn lại theo dõi bằng 7 issue phạm vi #11, #13, #15, #18, #21, #29, #30. Tạo issue không đồng nghĩa đã push mã nguồn.
 
 | Đợt | Phạm vi | Issue | Branch chốt đợt | Trạng thái |
 | --- | --- | --- | --- | --- |
 | 1 | Đăng ký, đăng nhập, tài khoản hiện tại, đăng xuất, phân quyền JWT | #1–#5 | codex/dot_01_xac_thuc | Đã có code cục bộ, chưa push |
-| 2 | Chuyên khoa, bác sĩ, bộ lọc, chi tiết và trang chủ dùng component | #6–#10 | codex/dot_02_tra_cuu | Đang triển khai cục bộ |
-| 3 | Xem và cập nhật hồ sơ bệnh nhân | #11–#12 | codex/dot_03_ho_so | Chưa triển khai |
-| 4 | Lịch làm việc, sinh và tra cứu khung giờ 30 phút | #13–#14 | codex/dot_04_khung_gio | Chưa triển khai |
-| 5 | Đặt lịch, theo dõi lịch và bệnh nhân hủy lịch | #15–#17 | codex/dot_05_lich_hen | Chưa triển khai |
-| 6 | Hai trang bác sĩ và ghi nhận kết quả | #18–#20 | codex/dot_06_bac_si | Chưa triển khai |
-| 7 | Dashboard, bác sĩ, lịch hẹn và chuyên khoa của Admin | #21–#28 | codex/dot_07_quan_tri | Chưa triển khai |
-| 8 | Kiểm thử tích hợp, đóng gói và đồng bộ tài liệu | #29–#30 | codex/dot_08_ban_giao | Chưa triển khai |
+| 2 | Chuyên khoa, bác sĩ, bộ lọc, chi tiết và trang chủ dùng component | #6–#10 | codex/dot_02_tra_cuu | Đã có code cục bộ, chưa push |
+| 3 | Xem và cập nhật hồ sơ bệnh nhân | #11 | codex/dot_03_ho_so | Đã có code cục bộ, chưa push |
+| 4 | Lịch làm việc, sinh và tra cứu khung giờ 30 phút | #13 | codex/dot_04_khung_gio | Đã có code cục bộ, chưa push |
+| 5 | Đặt lịch, theo dõi lịch và bệnh nhân hủy lịch | #15 | codex/dot_05_lich_hen | Đã có code cục bộ, chưa push |
+| 6 | Hai trang bác sĩ và ghi nhận kết quả | #18 | codex/dot_06_bac_si | Đã có code cục bộ, chưa push |
+| 7 | Dashboard, bác sĩ, lịch hẹn và chuyên khoa của Admin | #21 | codex/dot_07_quan_tri | Đã có code cục bộ, chưa push |
+| 8 | Kiểm thử tích hợp, đóng gói và đồng bộ tài liệu | #29–#30 | codex/dot_08_ban_giao | Đã có code cục bộ, chưa push |
 
 ## Cách phát triển
 

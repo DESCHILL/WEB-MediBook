@@ -8,18 +8,18 @@ Một repository chứa toàn bộ đồ án. Thư mục phân chia các phần 
 - Nhánh thay đổi: tên mô tả như `feature/appointment_booking`, `fix/slot_validation`, `docs/project_proposal`.
 - Các nhánh do Codex tạo mặc định dùng tiền tố `codex/`, ví dụ `codex/database_schema`.
 
-Sau commit đầu tiên và khi đã đưa repository lên GitHub, tạo nhánh cho thay đổi mới, commit phần liên quan, push nhánh rồi mở pull request vào `main`. Có thể bật bảo vệ `main` khi nhóm bắt đầu làm chung; chưa cấu hình thiết lập này trong bước chuẩn bị thư mục.
+Thực hiện theo [kế hoạch 8 đợt](release_plan.md): mỗi phạm vi đã gộp có một issue và branch `codex/issue_<số>_<chức_năng>`. Chỉ commit cục bộ khi code; chưa push cho đến khi người dùng yêu cầu. Mỗi lần được yêu cầu push chỉ phát hành một đợt vào `main`, không push tất cả branch. Mỗi đợt có branch chốt để tránh đưa lẫn code đợt sau.
 
 ## Commit
 
 Mỗi commit tập trung vào một mục đích. Các ví dụ:
 
 ```text
-chore(repo): organize project directories
-feat(database): add initial appointment schema
-feat(frontend): add doctor appointment calendar
-feat(backend): implement appointment cancellation
-docs(report): update project proposal
+Thêm API danh mục chuyên khoa và component hiển thị (#6)
+Lọc bác sĩ theo chuyên khoa và giữ lựa chọn trong URL (#8)
+Hoàn thiện trang Quản lý lịch hẹn của bác sĩ (#18)
+Kiểm tra quyền và giao dịch hủy lịch khám (#15)
+Đồng bộ đặc tả API với báo cáo đồ án (#30)
 ```
 
 Kiểm tra trước khi commit:

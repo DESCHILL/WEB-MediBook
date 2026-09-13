@@ -5,6 +5,8 @@ $features = Get-Content -LiteralPath (Join-Path $project_root 'docs/project/feat
 $existing = gh issue list --repo $repository --state all --limit 200 --json number,title,url | ConvertFrom-Json
 if ($LASTEXITCODE -ne 0) { throw 'Không đọc được issue trên GitHub.' }
 foreach ($feature in $features) {
+    if ($feature.consolidated_into) { continue }
+    if ($feature.issue -and ($existing | Where-Object number -eq $feature.issue)) { continue }
     $title = '[Đợt ' + $feature.batch + '] ' + $feature.title
     $match = $existing | Where-Object { $_.title -eq $title } | Select-Object -First 1
     if ($match) { Write-Output ($match.number.ToString() + ' ' + $title); continue }

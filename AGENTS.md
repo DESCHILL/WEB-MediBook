@@ -11,7 +11,9 @@
 # Quy trình phát triển và bàn giao
 
 - Tiếp tục hoàn thiện toàn bộ đồ án theo UI/UX trong báo cáo, chia giao diện thành các React component dùng lại; giữ tên file và hàm snake_case, import component bằng alias chữ hoa khi JSX yêu cầu.
-- Có 8 đợt bàn giao theo docs/project/release_plan.md. Mỗi chức năng có một GitHub issue và branch codex/issue_<so>_<chuc_nang>.
+- Có 8 đợt bàn giao theo docs/project/release_plan.md. Giữ nguyên issue #1–#10 đã thực hiện; gộp phần còn lại thành 7 issue phạm vi #11, #13, #15, #18, #21, #29, #30. Tạo branch codex/issue_<so>_<pham_vi> trước khi xử lý phạm vi đó; một branch có thể xử lý nhiều chức năng trong issue.
+- Khách và bệnh nhân có ba mục điều hướng chính: Trang chủ, Bác sĩ và chuyên khoa, Quản lý lịch hẹn. Khách được tra cứu công khai; đặt và quản lý lịch cá nhân yêu cầu đăng nhập bệnh nhân. Hồ sơ cá nhân nằm trong menu tài khoản.
+- Hoàn thiện toàn bộ website cục bộ độc lập với lịch push; lưu tiến độ vào docs/project/continuation_state.md khi dừng để phiên sau tiếp tục. Quyền người dùng cấp không vượt qua giới hạn công cụ hoặc hệ thống xét duyệt.
 - Commit bằng tiếng Việt, ghi số issue liên quan; chỉ stage file thuộc chức năng đang làm.
 - Chưa push nếu người dùng chưa yêu cầu. Mỗi lần người dùng nói push chỉ phát hành MỘT đợt chưa phát hành sớm nhất, sau khi kiểm tra.
 - Giữ main ở bản đã bàn giao. Các chức năng phát triển trên nhánh xếp nối tiếp; lưu ranh giới đợt bằng branch codex/dot_<so>_<ten>. Không push nhánh cuối chứa tất cả các đợt khi mới được phép push một đợt.

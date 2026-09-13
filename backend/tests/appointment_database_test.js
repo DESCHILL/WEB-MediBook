@@ -5,6 +5,12 @@ import { create_database } from '../src/config/database.js';
 import { read_environment } from '../src/config/environment.js';
 import { create_appointment_repository } from '../src/repositories/appointment_repository.js';
 import { create_appointment_service } from '../src/services/appointment_service.js';
+import {create_doctor_service} from '../src/services/doctor_service.js';
+import {create_doctor_repository} from '../src/repositories/doctor_repository.js';
+import {create_admin_service} from '../src/services/admin_service.js';
+import {create_admin_repository} from '../src/repositories/admin_repository.js';
+import {create_profile_service} from '../src/services/profile_service.js';
+import {create_profile_repository} from '../src/repositories/profile_repository.js';
 
 test('SQL thật: đặt đồng thời chỉ một người thành công, kiểm tra sở hữu và hủy giải phóng chỗ', { skip: process.env.RUN_DATABASE_TESTS !== 'true' }, async () => {
     const database = create_database(read_environment());
@@ -31,8 +37,10 @@ test('SQL thật: đặt đồng thời chỉ một người thành công, kiể
             INSERT dbo.TaiKhoan(email,ho_ten,mat_khau_hash,vai_tro) VALUES(@key+'q@example.test',N'Bệnh nhân khác','not_a_password','BENH_NHAN');
             DECLARE @other bigint=SCOPE_IDENTITY();
             INSERT dbo.BenhNhan(tai_khoan_id) VALUES(@other);
+            INSERT dbo.TaiKhoan(email,ho_ten,mat_khau_hash,vai_tro) VALUES(@key+'a@example.test',N'Admin thử','not_a_password','ADMIN');
+            DECLARE @admin bigint=SCOPE_IDENTITY();
             COMMIT;
-            SELECT CONVERT(varchar(20),@slot) slot_id,CONVERT(varchar(20),@patient) patient_id,CONVERT(varchar(20),@other) other_id;
+            SELECT CONVERT(varchar(20),@slot) slot_id,CONVERT(varchar(20),@patient) patient_id,CONVERT(varchar(20),@other) other_id,CONVERT(varchar(20),@doctor_account) doctor_account,CONVERT(varchar(20),@specialty) specialty_id,CONVERT(varchar(20),@admin) admin_id;
         `);
         const fixture = setup.recordset[0];
         const service = create_appointment_service(create_appointment_repository(database));
@@ -47,15 +55,33 @@ test('SQL thật: đặt đồng thời chỉ một người thành công, kiể
         await assert.rejects(service.cancel(other, id), { status: 404 });
         await service.cancel(owner, id);
         await assert.rejects(service.cancel(owner, id), { status: 409 });
-        await service.book(other, { khung_gio_id: fixture.slot_id });
+        const rebook=await service.book(other, { khung_gio_id: fixture.slot_id });
+        const admin=create_admin_service(create_admin_repository(database));
+        await assert.rejects(admin.cancel(owner,rebook.lich_hen_id),{status:403});
+        await assert.rejects(admin.delete_specialty(fixture.specialty_id),{status:409});
+        await admin.cancel(fixture.admin_id,rebook.lich_hen_id);
+        const examination=await service.book(owner,{khung_gio_id:fixture.slot_id});
+        const doctor=create_doctor_service(create_doctor_repository(database));
+        await assert.rejects(doctor.save_result(fixture.doctor_account,examination.lich_hen_id,{noi_dung:'Kết quả giả lập'}),{status:409});
+        await pool.request().input('id',fixture.slot_id).query('UPDATE dbo.KhungGioKham SET bat_dau_luc=DATEADD(day,-5,bat_dau_luc),ket_thuc_luc=DATEADD(day,-5,ket_thuc_luc) WHERE khung_gio_id=@id;');
+        await assert.rejects(doctor.save_result(other,examination.lich_hen_id,{noi_dung:'Kết quả giả lập'}),{status:404});
+        await doctor.save_result(fixture.doctor_account,examination.lich_hen_id,{noi_dung:'Kết quả kiểm thử giả lập'});
+        await assert.rejects(doctor.save_result(fixture.doctor_account,examination.lich_hen_id,{noi_dung:'Ghi lại'}),{status:409});
+        const finished=(await service.list(owner)).items.find((item)=>item.lich_hen_id===examination.lich_hen_id);
+        assert.equal(finished.trang_thai,'Đã khám');assert.equal(finished.ket_qua,'Kết quả kiểm thử giả lập');
+        const profile=create_profile_service(create_profile_repository(database));
+        await profile.update(owner,{ho_ten:'Bệnh nhân kiểm thử đã sửa',ngay_sinh:'2000-02-29',gioi_tinh:'Nam',dia_chi:'Địa chỉ giả lập',so_dien_thoai:'0900000000'});
+        assert.equal((await profile.get(owner)).profile.ngay_sinh,'2000-02-29');
+        assert.equal((await doctor.list(fixture.doctor_account)).items.length,3);
     } finally {
         if (pool) await pool.request().input('key', key).query(`
+            DELETE q FROM dbo.KetQuaKham q JOIN dbo.LichHen h ON h.lich_hen_id=q.lich_hen_id JOIN dbo.KhungGioKham k ON k.khung_gio_id=h.khung_gio_id JOIN dbo.BacSi b ON b.bac_si_id=k.bac_si_id JOIN dbo.TaiKhoan a ON a.tai_khoan_id=b.tai_khoan_id WHERE a.email=@key+'d@example.test';
             DELETE h FROM dbo.LichHen h JOIN dbo.KhungGioKham k ON k.khung_gio_id=h.khung_gio_id JOIN dbo.BacSi b ON b.bac_si_id=k.bac_si_id JOIN dbo.TaiKhoan a ON a.tai_khoan_id=b.tai_khoan_id WHERE a.email=@key+'d@example.test';
             DELETE k FROM dbo.KhungGioKham k JOIN dbo.BacSi b ON b.bac_si_id=k.bac_si_id JOIN dbo.TaiKhoan a ON a.tai_khoan_id=b.tai_khoan_id WHERE a.email=@key+'d@example.test';
             DELETE l FROM dbo.LichLamViec l JOIN dbo.BacSi b ON b.bac_si_id=l.bac_si_id JOIN dbo.TaiKhoan a ON a.tai_khoan_id=b.tai_khoan_id WHERE a.email=@key+'d@example.test';
             DELETE b FROM dbo.BacSi b JOIN dbo.TaiKhoan a ON a.tai_khoan_id=b.tai_khoan_id WHERE a.email=@key+'d@example.test';
             DELETE p FROM dbo.BenhNhan p JOIN dbo.TaiKhoan a ON a.tai_khoan_id=p.tai_khoan_id WHERE a.email IN(@key+'p@example.test',@key+'q@example.test');
-            DELETE dbo.TaiKhoan WHERE email IN(@key+'d@example.test',@key+'p@example.test',@key+'q@example.test');
+            DELETE dbo.TaiKhoan WHERE email IN(@key+'d@example.test',@key+'p@example.test',@key+'q@example.test',@key+'a@example.test');
             DELETE dbo.ChuyenKhoa WHERE ten_chuyen_khoa=N'Kiểm thử lịch '+@key;
         `);
         await database.close_pool();
