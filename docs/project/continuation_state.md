@@ -41,3 +41,7 @@ Việc mở máy hoặc mở ứng dụng không tự bảo đảm phiên tác v
 ## Phát hành đợt 1 ngày 13/09/2026
 
 Đã push các branch issue #1–#5 và codex/dot_01_xac_thuc. PR https://github.com/DESCHILL/WEB-MediBook/pull/31 đã hợp nhất bằng merge commit 9c16ae9ae2a6d161169c7ab6c9b4f19cb80e353d; main cục bộ và origin/main đã đồng bộ. Issue #1–#5 đóng sau hợp nhất, #6–#10 giữ nguyên. Đợt 1 được kiểm tra riêng: 11 test API, 1 test SQL và build đều đạt. Không phát hành đợt 2–8. Lần push kế tiếp là đợt 2. Bản website đầy đủ vẫn trên branch phát triển cục bộ.
+
+## Rà soát Bác sĩ và Admin ngày 13/09/2026
+
+Đã kiểm tra lại trên trình duyệt bằng dữ liệu SQL thật. Bác sĩ có đúng hai mục, xem được lịch tuần và danh sách bệnh nhân/kết quả khám. Admin mở được đủ năm màn hình, gồm dữ liệu tổng quan, lịch hẹn, form thêm bác sĩ, 13 bác sĩ cùng phần lịch làm việc và 6 chuyên khoa. Giao diện Admin ở kích thước 390 × 844 hiển thị một cột, điều hướng không mất mục. `npm test` đạt 25/25 test logic và `npm run build` đạt. Không phát sinh thay đổi chức năng hoặc push mới sau đợt 1.
