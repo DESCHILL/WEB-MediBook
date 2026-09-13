@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 $project_root = Split-Path $PSScriptRoot -Parent
 $node_command = Get-Command node -ErrorAction SilentlyContinue
 $node_path = if ($node_command) { $node_command.Source } else { Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe' }

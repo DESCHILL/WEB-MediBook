@@ -27,3 +27,13 @@ GitHub còn 7 issue phạm vi chưa bàn giao ngoài #1–#10 được giữ ngu
 Đọc AGENTS.md, release_plan.md và git status; giữ thay đổi chưa commit. Kiểm tra tiến trình backend/frontend và SQL Server trước khi chạy lại. Tiếp tục chức năng còn thiếu, kiểm thử quyền và transaction, đối chiếu UI/UX. Cập nhật tài liệu hướng dẫn đọc code và báo cáo khi các module ổn định.
 
 Việc mở máy hoặc mở ứng dụng không tự bảo đảm phiên tác vụ chạy lại; cần khôi phục tác vụ hoặc gửi “tiếp tục”. Không tự vượt giới hạn quyền công cụ hoặc giới hạn sử dụng.
+
+## Cập nhật ngày 13/09/2026
+
+- Đã tách thành công các nhánh chốt đợt 2–8; test và build từng đợt đều đạt. Đợt 1 giữ nguyên mốc e41460c.
+- Các mốc đợt 2–7: 31239e8, 80564c8, 78f854f, bdc7782, 6833d9f, 2943452. Đợt 8 có toàn bộ mã nguồn và tài liệu; dùng branch codex/dot_08_ban_giao để xác định commit mới nhất.
+- Branch issue #11, #13, #15, #18, #21 trỏ đúng phạm vi bàn giao. Lịch sử triển khai cũ được giữ tại codex/local_history/issue_*.
+- Worktree bàn giao nằm tại local_data/release_tree, đang ở đợt 8. Không chạy lại create_release_branches.py lên worktree đã tồn tại.
+- Chạy lại 4 bài kiểm thử tích hợp SQL: tất cả đạt, không bỏ qua bài nào.
+- Sửa scripts/start_project.ps1 thành UTF-8 có BOM để Windows PowerShell 5.1 đọc đúng tiếng Việt và không lỗi phân tích cú pháp.
+- Chưa push hoặc tạo PR; main và origin/main vẫn ở 1187c4adcef90d01cb7b8930396962820d9cf1ca. Đợt được phát hành tiếp theo khi có yêu cầu push vẫn là đợt 1.
