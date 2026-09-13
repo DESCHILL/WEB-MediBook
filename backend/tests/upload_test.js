@@ -9,7 +9,7 @@ import {upload_directory} from '../src/routes/upload_routes.js';
 test('ảnh chỉ dành cho Admin, chặn sai định dạng và ảnh quá lớn',async()=>{
     const config={jwt_secret:'test_only_secret_with_more_than_32_bytes',app_origin:'http://127.0.0.1:5173'};
     let role='BENH_NHAN';
-    const app=create_app({},{auth_config:config,auth_repository:{find_session:async()=>({tai_khoan_id:'42',vai_tro:role,hoat_dong:true})}});
+    const app=create_app({},{auth_config:config,auth_repository:{find_session:async()=>({tai_khoan_id:'42',vai_tro:role,hoat_dong:true,email_xac_minh_luc:new Date()})}});
     const token=jwt.sign({},config.jwt_secret,{subject:'42',jwtid:'a'.repeat(36),issuer:'medibook',audience:'medibook_web',expiresIn:3600});
     const upload=()=>request(app).post('/api/uploads').set('Authorization',`Bearer ${token}`).set('Content-Type','image/png');
     await upload().send(Buffer.from('invalid')).expect(403);

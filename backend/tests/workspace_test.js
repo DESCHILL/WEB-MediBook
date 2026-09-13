@@ -10,7 +10,7 @@ const config={jwt_secret:'test_only_secret_with_more_than_32_bytes',app_origin:'
 test('toàn bộ trang riêng chặn vai trò không phù hợp tại API',async()=>{
     for(const role of ['BENH_NHAN','BAC_SI','ADMIN']){
         const token=jwt.sign({},config.jwt_secret,{subject:'42',jwtid:'a'.repeat(36),issuer:'medibook',audience:'medibook_web',expiresIn:3600});
-        const app=create_app({},{auth_config:config,auth_repository:{find_session:async()=>({tai_khoan_id:'42',vai_tro:role,hoat_dong:true})}});
+        const app=create_app({},{auth_config:config,auth_repository:{find_session:async()=>({tai_khoan_id:'42',vai_tro:role,hoat_dong:true,email_xac_minh_luc:new Date()})}});
         for(const [path,allowed]of [['/api/profile','BENH_NHAN'],['/api/doctor/appointments','BAC_SI'],['/api/admin/dashboard','ADMIN'],['/api/admin/doctors','ADMIN'],['/api/admin/specialties','ADMIN'],['/api/admin/doctors/1/schedules','ADMIN']]){
             await request(app).get(path).expect(401);
             if(role!==allowed)await request(app).get(path).set('Authorization',`Bearer ${token}`).expect(403);
@@ -26,7 +26,7 @@ test('lịch làm việc kiểm tra bước 30 phút, thứ và khoảng sinh',a
 test('thêm bác sĩ băm mật khẩu và từ chối gán quyền; kết quả khám chặn rỗng',async()=>{
     let stored;const admin=create_admin_service({create_doctor:async(data)=>{stored=data;return {bac_si_id:'1'};}});
     await assert.rejects(admin.create_doctor({vai_tro:'ADMIN'}),{status:400});
-    await admin.create_doctor({ho_ten:'Bác sĩ kiểm thử',email:'doctor@example.test',mat_khau:'TestPassword123!',chuyen_khoa_id:'1',phi_kham:100000});
+    await admin.create_doctor({ho_ten:'Bác sĩ kiểm thử',email:'doctor@example.test',chuyen_khoa_id:'1',phi_kham:100000});
     assert.match(stored.mat_khau_hash,/^\$2/);assert.equal(stored.mat_khau,undefined);
     const doctor=create_doctor_service({});await assert.rejects(doctor.save_result('1','2',{noi_dung:'  '}),{status:400});
 });

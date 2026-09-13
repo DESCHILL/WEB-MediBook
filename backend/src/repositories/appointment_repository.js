@@ -44,6 +44,8 @@ export function create_appointment_repository(database) {
                 BEGIN TRANSACTION;
                 DECLARE @patient_id bigint=(SELECT benh_nhan_id FROM dbo.BenhNhan WHERE tai_khoan_id=@account_id);
                 IF @patient_id IS NULL THROW 51001,N'Không tìm thấy hồ sơ bệnh nhân.',1;
+                IF NOT EXISTS(SELECT 1 FROM dbo.TaiKhoan WHERE tai_khoan_id=@account_id AND email_xac_minh_luc IS NOT NULL AND hoat_dong=1 AND vai_tro='BENH_NHAN')
+                    THROW 51011,N'Bạn cần xác minh email trước khi đặt khám.',1;
                 IF NOT EXISTS (SELECT 1 FROM dbo.KhungGioKham k WITH (UPDLOCK,HOLDLOCK)
                     JOIN dbo.LichLamViec l ON l.lich_lam_viec_id=k.lich_lam_viec_id
                     JOIN dbo.BacSi b ON b.bac_si_id=k.bac_si_id JOIN dbo.TaiKhoan a ON a.tai_khoan_id=b.tai_khoan_id
@@ -53,6 +55,12 @@ export function create_appointment_repository(database) {
                 UPDATE dbo.KhungGioKham SET so_cho_da_dat=so_cho_da_dat+1 WHERE khung_gio_id=@slot_id;
                 INSERT dbo.LichHen(benh_nhan_id,khung_gio_id,dat_luc) VALUES(@patient_id,@slot_id,${local_now});
                 DECLARE @new_id bigint=SCOPE_IDENTITY();
+                DECLARE @email_data nvarchar(max)=(SELECT CONVERT(varchar(20),@new_id) lich_hen_id,a.ho_ten bac_si,c.ten_chuyen_khoa chuyen_khoa,
+                    b.dia_chi_kham dia_chi,CONVERT(varchar(19),k.bat_dau_luc,126)+'+07:00' bat_dau_luc
+                    FROM dbo.KhungGioKham k JOIN dbo.BacSi b ON b.bac_si_id=k.bac_si_id
+                    JOIN dbo.TaiKhoan a ON a.tai_khoan_id=b.tai_khoan_id JOIN dbo.ChuyenKhoa c ON c.chuyen_khoa_id=b.chuyen_khoa_id
+                    WHERE k.khung_gio_id=@slot_id FOR JSON PATH,WITHOUT_ARRAY_WRAPPER);
+                INSERT dbo.HangDoiEmail(tai_khoan_id,loai,du_lieu) VALUES(@account_id,'BOOKING',@email_data);
                 COMMIT;
                 SELECT CONVERT(varchar(20),@new_id) lich_hen_id;
             END TRY

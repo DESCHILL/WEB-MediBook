@@ -2,7 +2,7 @@ export function create_auth_controller(service, config) {
     const cookie_options = { httpOnly: true, secure: config.cookie_secure, sameSite: 'strict', path: '/api' };
     async function register(request, response) {
         const account = await service.register(request.body);
-        response.status(201).json({ message: 'Tạo tài khoản thành công. Vui lòng đăng nhập.', account });
+        response.status(201).json({ message: 'Tài khoản đã được tạo và email xác minh đã được đưa vào hàng đợi. Vui lòng mở liên kết trong hộp thư trước khi đăng nhập.', verification_required:true, account });
     }
     async function login(request, response) {
         const result = await service.login(request.body);

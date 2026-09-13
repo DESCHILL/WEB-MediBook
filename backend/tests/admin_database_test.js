@@ -11,7 +11,7 @@ test('SQL thật: CRUD chuyên khoa và thêm bác sĩ nguyên tử, không lộ
         pool=await database.get_pool();const service=create_admin_service(create_admin_repository(database));
         const specialty=await service.save_specialty(null,{ten_chuyen_khoa:`Kiểm thử ${key}`,mo_ta:'Dữ liệu giả'});
         await service.save_specialty(specialty.chuyen_khoa_id,{ten_chuyen_khoa:`Kiểm thử ${key}`,mo_ta:'Đã sửa'});
-        const input={ho_ten:'Bác sĩ giả lập',email:`${key}@example.test`,mat_khau:'TestOnlyPassword123!',chuyen_khoa_id:specialty.chuyen_khoa_id,phi_kham:125000};
+        const input={ho_ten:'Bác sĩ giả lập',email:`${key}@example.test`,chuyen_khoa_id:specialty.chuyen_khoa_id,phi_kham:125000};
         const doctor=await service.create_doctor(input);
         await assert.rejects(service.create_doctor(input),{status:409});
         await assert.rejects(service.delete_specialty(specialty.chuyen_khoa_id),{status:409});

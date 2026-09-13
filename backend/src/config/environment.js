@@ -16,6 +16,9 @@ export function read_environment(env = process.env) {
     if (!/^https?:\/\//.test(app_origin) || new URL(app_origin).origin !== app_origin) throw new Error('APP_ORIGIN phải là origin hợp lệ, không có đường dẫn.');
     const cookie_secure = read_boolean(env.COOKIE_SECURE, false);
     if (env.NODE_ENV === 'production' && (!cookie_secure || !app_origin.startsWith('https://'))) throw new Error('Production yêu cầu HTTPS và COOKIE_SECURE=true.');
+    const smtp_port=Number(env.SMTP_PORT??465);
+    if (!Number.isInteger(smtp_port)||smtp_port<1||smtp_port>65535) throw new Error('SMTP_PORT không hợp lệ.');
+    if (env.SMTP_FROM && !/^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/.test(env.SMTP_FROM)) throw new Error('SMTP_FROM phải là một địa chỉ email.');
     return {
         host: env.HOST ?? '127.0.0.1',
         port,
@@ -27,6 +30,12 @@ export function read_environment(env = process.env) {
         jwt_secret: env.JWT_SECRET,
         app_origin,
         cookie_secure,
+        smtp_host:env.SMTP_HOST,
+        smtp_port,
+        smtp_secure:read_boolean(env.SMTP_SECURE,true),
+        smtp_user:env.SMTP_USER,
+        smtp_password:env.SMTP_PASSWORD,
+        smtp_from:env.SMTP_FROM,
         db_trust_certificate: read_boolean(env.DB_TRUST_SERVER_CERTIFICATE, false),
         db_user: env.DB_USER,
         db_password: env.DB_PASSWORD,

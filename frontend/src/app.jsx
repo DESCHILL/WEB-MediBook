@@ -5,6 +5,8 @@ import Specialty_page from './pages/specialty_page.jsx';
 import Doctor_list_page from './pages/doctor_list_page.jsx';
 import Doctor_detail_page from './pages/doctor_detail_page.jsx';
 import Auth_page from './pages/auth_page.jsx';
+import Email_verification_page from './pages/email_verification_page.jsx';
+import Resend_email_page from './pages/resend_email_page.jsx';
 import Account_page from './pages/account_page.jsx';
 import Appointment_page from './pages/appointment_page.jsx';
 import Doctor_workspace from './pages/doctor_workspace.jsx';
@@ -15,7 +17,7 @@ export default function app() {
     const auth = use_auth();
     const path = window.location.pathname.replace(/\/$/, '') || '/';
     const doctor_match = /^\/bac_si\/([^/]+)$/.exec(path);
-    const auth_page = ['/dang_nhap', '/dang_ky'].includes(path);
+    const auth_page = ['/dang_nhap', '/dang_ky','/xac_minh_email','/kich_hoat_bac_si','/gui_lai_email'].includes(path);
     let page;
     if (path === '/') page = <Home_page />;
     else if(path==='/quan_tri'||path.startsWith('/quan_tri/'))page=<Admin_workspace auth={auth} path={path}/>;
@@ -24,6 +26,8 @@ export default function app() {
     else if(['/bac_si/lich_hen','/bac_si/benh_nhan'].includes(path)) page=<Doctor_workspace auth={auth} path={path}/>;
     else if (doctor_match) page = <Doctor_detail_page doctor_id={doctor_match[1]} auth={auth} />;
     else if (path === '/lich_hen') page = <Appointment_page auth={auth} />;
+    else if (path === '/xac_minh_email' || path === '/kich_hoat_bac_si') page = <Email_verification_page doctor={path==='/kich_hoat_bac_si'}/>;
+    else if (path === '/gui_lai_email') page = <Resend_email_page/>;
     else if (auth_page) page = <Auth_page registration={path === '/dang_ky'} auth={auth} />;
     else if (path === '/tai_khoan') page = <Account_page auth={auth} />;
     else page = <main className="public_main request_state"><h1>Không tìm thấy trang</h1><a className="soft_button" href="/">Về trang chủ</a></main>;
