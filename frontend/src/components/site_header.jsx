@@ -6,7 +6,7 @@ export default function site_header({ account, loading, path, logout, pending })
         <nav className="main_navigation" aria-label="Điều hướng chính">
             <a href="/" aria-current={path === '/' ? 'page' : undefined}>TRANG CHỦ</a>
             <a href="/bac_si" aria-current={path.startsWith('/bac_si') || path === '/chuyen_khoa' ? 'page' : undefined}>BÁC SĨ VÀ CHUYÊN KHOA</a>
-            <a href="/lich_hen" aria-current={path === '/lich_hen' ? 'page' : undefined}>QUẢN LÝ LỊCH HẸN</a>
+            <a href="/lich_hen" aria-disabled="true" tabIndex={-1} onClick={(event)=>event.preventDefault()} aria-current={path === '/lich_hen' ? 'page' : undefined}>QUẢN LÝ LỊCH HẸN</a>
         </nav>
         {account ? <div className="header_account"><a href="/tai_khoan" className="account_link" aria-label={`Tài khoản ${account.ho_ten}`}>{account.ho_ten}</a><button className="header_button" disabled={pending} onClick={logout}>Đăng xuất</button></div> :
             <a className="header_button" href="/dang_ky" aria-disabled={loading ? 'true' : undefined}>Tạo tài khoản</a>}
