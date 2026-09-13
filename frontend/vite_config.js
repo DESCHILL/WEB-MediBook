@@ -7,6 +7,6 @@ export default define_config({
         host: '127.0.0.1',
         port: 5173,
         strictPort: true,
-        proxy: { '/api': 'http://127.0.0.1:3000' },
+        proxy: { '/api': 'http://127.0.0.1:3000', '/uploads': 'http://127.0.0.1:3000' },
     },
 });
