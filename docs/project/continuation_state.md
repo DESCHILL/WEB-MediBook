@@ -1,5 +1,15 @@
 # Tiến độ và yêu cầu tiếp tục
 
+## Cập nhật email ngày 13/09/2026 — trạng thái mới nhất
+
+- Đã triển khai xác minh email bệnh nhân, Admin mời bác sĩ qua email để tự đặt mật khẩu, gửi thông tin đặt khám bằng hàng đợi SQL. Gmail SMTP dùng Mật khẩu ứng dụng. Không gửi mật khẩu đăng nhập trong email.
+- Migration `database/migrations/04_email_verification.sql` đã áp dụng trên SQL cục bộ sau khi tạo backup COPY_ONLY và kiểm tra backup. Thêm XacMinhEmail, HangDoiEmail và TaiKhoan.email_xac_minh_luc.
+- Bệnh nhân và bác sĩ chưa xác minh không đăng nhập được, kể cả tài khoản demo example.test trước đây. Admin vẫn đăng nhập để quản trị. Không giả lập xác minh cho dữ liệu thật bằng SQL.
+- Kiểm tra: 29 test logic/API đạt, build frontend đạt; chạy riêng đầy đủ 5 test SQL đạt, không bỏ qua. Đã kiểm tra trang kích hoạt bác sĩ trên trình duyệt: giữ token trong trạng thái trang và xóa token khỏi thanh địa chỉ.
+- Chưa gửi email thật: SMTP_USER, SMTP_FROM, SMTP_PASSWORD trong backend/.env còn cần người dùng nhập trực tiếp. Đọc docs/project/gmail_setup.md, chạy npm run check:email rồi khởi động lại backend. Tuyệt đối không đưa mật khẩu vào chat hoặc Git.
+- Nhánh chức năng codex/issue_29_email_verification; phạm vi bổ sung thuộc đợt 8. Không thay đổi đợt 1–7 và chưa push thêm. Lần push tiếp theo vẫn chỉ là đợt 2.
+- Đặc tả mới ở docs/architecture/email_api.md. Word, ERD đã xuất và các backup/bundle cũ chưa được đồng bộ với phần email; cần cập nhật sau khi kiểm tra gửi nhận Gmail thật.
+
 ## Yêu cầu đã chốt ngày 10/09/2026
 
 - Hoàn thiện toàn bộ website trên máy, bám UI/UX báo cáo. Chưa push code; mỗi yêu cầu push chỉ phát hành một đợt theo release_plan.md.
