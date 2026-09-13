@@ -36,3 +36,7 @@ Module xác thực đã được viết trước khi áp dụng quy trình này:
 Giữ React/Vite, chia `components`, `pages`, `hooks`, `services`; không đưa mọi màn hình vào app.jsx. React yêu cầu tên component trong JSX bắt đầu bằng chữ hoa: dùng alias khi import, còn tên hàm/file tự viết vẫn snake_case. Giữ header, nền trắng, màu tím, bố cục thẻ và sidebar theo UI/UX.
 
 Dữ liệu demo phải giả lập, có nguồn seed rõ ràng, không đặt mật khẩu đăng nhập mẫu cố định trong repo. Chức năng chưa làm không được hiển thị dữ liệu hay thông báo thành công giả. Tài liệu Word và hướng dẫn đọc code cũ được giữ để đồng bộ ở đợt 8; SRS/API được cập nhật theo từng chức năng ngay khi code.
+
+## Kiểm tra các mốc ngày 13/09/2026
+
+Đã tạo đủ tám branch chốt đợt. Các đợt 2–8 đã chạy test và build riêng thành công. Bản đầy đủ chạy thêm 4 bài kiểm thử SQL, tất cả đạt. Các branch chức năng #11/#13/#15/#18/#21 đã được gắn lại đúng mốc tương ứng; lịch sử phát triển trước khi tách được bảo toàn trong codex/local_history. Chưa có đợt nào được push.
