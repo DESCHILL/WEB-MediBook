@@ -4,7 +4,7 @@ Người dùng yêu cầu tiếp tục toàn bộ đồ án, commit tiếng Vi�
 
 | Đợt | Phạm vi | Issue | Branch chốt đợt | Trạng thái |
 | --- | --- | --- | --- | --- |
-| 1 | Đăng ký, đăng nhập, tài khoản hiện tại, đăng xuất, phân quyền JWT | #1–#5 | codex/dot_01_xac_thuc | Đã có code cục bộ, chưa push |
+| 1 | Đăng ký, đăng nhập, tài khoản hiện tại, đăng xuất, phân quyền JWT | #1–#5 | codex/dot_01_xac_thuc | Đã hợp nhất PR #31 ngày 13/09/2026 |
 | 2 | Chuyên khoa, bác sĩ, bộ lọc, chi tiết và trang chủ dùng component | #6–#10 | codex/dot_02_tra_cuu | Đã có code cục bộ, chưa push |
 | 3 | Xem và cập nhật hồ sơ bệnh nhân | #11 | codex/dot_03_ho_so | Đã có code cục bộ, chưa push |
 | 4 | Lịch làm việc, sinh và tra cứu khung giờ 30 phút | #13 | codex/dot_04_khung_gio | Đã có code cục bộ, chưa push |
@@ -29,7 +29,7 @@ Module xác thực đã được viết trước khi áp dụng quy trình này:
 4. Tạo PR tiếng Việt từ branch chốt đợt vào main; mô tả các issue và bằng chứng kiểm thử. Hợp nhất sau khi kiểm tra xung đột và checks. Giữ các commit tiếng Việt trong lịch sử.
 5. Chỉ đóng issue của đợt đã hợp nhất và cập nhật trạng thái đã phát hành. Dừng sau MỘT đợt; không tự động push tiếp.
 
-Đợt kế tiếp được phép phát hành khi người dùng nói push: **đợt 1**. Hiện chưa có đợt nào trong bảng được push.
+Đợt kế tiếp được phép phát hành khi người dùng nói push: **đợt 2**. Đợt 1 đã hợp nhất vào main qua PR #31; các đợt 2–8 chưa phát hành.
 
 ## Giao diện và dữ liệu
 
