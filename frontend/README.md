@@ -1,6 +1,10 @@
 # Frontend
 
-React 19 và Vite 8, dùng JavaScript/JSX. Hiện chỉ có trang khởi tạo; các màn hình nghiệp vụ sẽ được dựng theo UI/UX trong báo cáo.
+React 19 và Vite 8, dùng JavaScript/JSX. Đã có trang chủ, chuyên khoa, danh sách/lọc/chi tiết bác sĩ và xác thực theo UI/UX trong báo cáo.
+
+`pages/` chứa màn hình, `components/` chứa header/footer/form/thẻ bác sĩ/bộ lọc, `hooks/` quản lý phiên và tải dữ liệu, `services/` gọi API. app.jsx chỉ chọn trang và dựng bố cục chung. Điều hướng dùng link cùng origin; URL lưu chuyên khoa và phân trang, hỗ trợ tải lại và Back của trình duyệt. Máy chủ phục vụ build cần fallback URL giao diện về index.html.
+
+Ảnh banner lấy từ ảnh UI/UX của người dùng trong báo cáo, hiển thị vùng ảnh qua SVG viewBox; chưa có file ảnh gốc tách riêng. Logo và hình thay thế được dựng bằng SVG. Thẻ bác sĩ không hiển thị còn chỗ giả; khung giờ và đặt lịch sẽ nối ở đợt 4–5.
 
 Chạy từ gốc repository: `npm run dev:frontend` để mở `http://127.0.0.1:5173`; `npm run build` để xuất `frontend/dist/`.
 
