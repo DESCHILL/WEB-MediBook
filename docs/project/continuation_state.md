@@ -37,3 +37,7 @@ Việc mở máy hoặc mở ứng dụng không tự bảo đảm phiên tác v
 - Chạy lại 4 bài kiểm thử tích hợp SQL: tất cả đạt, không bỏ qua bài nào.
 - Sửa scripts/start_project.ps1 thành UTF-8 có BOM để Windows PowerShell 5.1 đọc đúng tiếng Việt và không lỗi phân tích cú pháp.
 - Chưa push hoặc tạo PR; main và origin/main vẫn ở 1187c4adcef90d01cb7b8930396962820d9cf1ca. Đợt được phát hành tiếp theo khi có yêu cầu push vẫn là đợt 1.
+
+## Phát hành đợt 1 ngày 13/09/2026
+
+Đã push các branch issue #1–#5 và codex/dot_01_xac_thuc. PR https://github.com/DESCHILL/WEB-MediBook/pull/31 đã hợp nhất bằng merge commit 9c16ae9ae2a6d161169c7ab6c9b4f19cb80e353d; main cục bộ và origin/main đã đồng bộ. Issue #1–#5 đóng sau hợp nhất, #6–#10 giữ nguyên. Đợt 1 được kiểm tra riêng: 11 test API, 1 test SQL và build đều đạt. Không phát hành đợt 2–8. Lần push kế tiếp là đợt 2. Bản website đầy đủ vẫn trên branch phát triển cục bộ.
