@@ -9,6 +9,8 @@
     "test": "node --test tests/*_test.js",
     "test:database": "node --env-file-if-exists=.env --test --test-concurrency=1 tests/*_database_test.js",
     "check:database": "node --env-file-if-exists=.env scripts/check_database.js",
+    "check:email": "node --env-file-if-exists=.env scripts/check_email.js",
+    "setup:email": "node scripts/setup_email.js",
     "seed:catalog": "node --env-file-if-exists=.env scripts/seed_catalog.js",
     "seed:schedules": "node --env-file-if-exists=.env scripts/seed_schedules.js",
     "seed:accounts": "node --env-file-if-exists=.env scripts/seed_demo_accounts.js"
@@ -21,7 +23,8 @@
     "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
     "msnodesqlv8": "^5.3.0",
-    "mssql": "^12.7.1"
+    "mssql": "^12.7.1",
+    "nodemailer": "^10.0.9"
   },
   "devDependencies": {
     "supertest": "^7.2.2"

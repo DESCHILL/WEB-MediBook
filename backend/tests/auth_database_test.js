@@ -18,6 +18,11 @@ test('SQL Server: hai đăng ký đồng thời chỉ tạo một tài khoản v
         const pool = await database.get_pool();
         const rows = await pool.request().input('email', email).query('SELECT a.vai_tro,a.mat_khau_hash,p.benh_nhan_id FROM dbo.TaiKhoan a JOIN dbo.BenhNhan p ON p.tai_khoan_id=a.tai_khoan_id WHERE a.email=@email;');
         assert.equal(rows.recordset.length, 1); assert.equal(rows.recordset[0].vai_tro, 'BENH_NHAN'); assert.match(rows.recordset[0].mat_khau_hash, /^\$2[ab]\$12\$/);
+        await request(app).post('/api/auth/login').send({email,mat_khau:body.mat_khau}).expect(403);
+        const queued=(await pool.request().input('email',email).query("SELECT e.du_lieu FROM dbo.HangDoiEmail e JOIN dbo.TaiKhoan a ON a.tai_khoan_id=e.tai_khoan_id WHERE a.email=@email AND e.loai='VERIFY';")).recordset[0];
+        const token=new URL(JSON.parse(queued.du_lieu).link).hash.slice(7);
+        await request(app).post('/api/auth/email/verify').send({token}).expect(200);
+        await request(app).post('/api/auth/email/verify').send({token}).expect(400);
         const login = await request(app).post('/api/auth/login').send({ email, mat_khau: body.mat_khau }).expect(200);
         const cookie = login.headers['set-cookie'][0];
         await request(app).get('/api/auth/me').set('Cookie', cookie).expect(200);

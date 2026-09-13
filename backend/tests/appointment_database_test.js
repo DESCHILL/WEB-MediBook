@@ -39,6 +39,7 @@ test('SQL thật: đặt đồng thời chỉ một người thành công, kiể
             INSERT dbo.BenhNhan(tai_khoan_id) VALUES(@other);
             INSERT dbo.TaiKhoan(email,ho_ten,mat_khau_hash,vai_tro) VALUES(@key+'a@example.test',N'Admin thử','not_a_password','ADMIN');
             DECLARE @admin bigint=SCOPE_IDENTITY();
+            UPDATE dbo.TaiKhoan SET email_xac_minh_luc=SYSUTCDATETIME() WHERE tai_khoan_id IN (@patient,@other,@doctor_account);
             COMMIT;
             SELECT CONVERT(varchar(20),@slot) slot_id,CONVERT(varchar(20),@patient) patient_id,CONVERT(varchar(20),@other) other_id,CONVERT(varchar(20),@doctor_account) doctor_account,CONVERT(varchar(20),@specialty) specialty_id,CONVERT(varchar(20),@admin) admin_id;
         `);
@@ -50,6 +51,9 @@ test('SQL thật: đặt đồng thời chỉ một người thành công, kiể
         const owner = attempts[0].status === 'fulfilled' ? fixture.patient_id : fixture.other_id;
         const other = owner === fixture.patient_id ? fixture.other_id : fixture.patient_id;
         const id = attempts.find((item) => item.status === 'fulfilled').value.lich_hen_id;
+        const emails=(await pool.request().input('owner',owner).query("SELECT du_lieu FROM dbo.HangDoiEmail WHERE tai_khoan_id=@owner AND loai='BOOKING';")).recordset;
+        assert.equal(emails.length,1);
+        assert.equal(JSON.parse(emails[0].du_lieu).lich_hen_id,id);
         assert.equal((await service.list(owner)).items.length, 1);
         assert.equal((await service.list(other)).items.length, 0);
         await assert.rejects(service.cancel(other, id), { status: 404 });

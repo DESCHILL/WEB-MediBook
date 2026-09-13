@@ -17,7 +17,7 @@ function create_fixture() {
     const repository = {
         async create_patient(input) {
             if (accounts.has(input.email)) throw Object.assign(new Error('duplicate'), { number: 2627 });
-            const account = { ...input, tai_khoan_id: String(accounts.size + 1), vai_tro: 'BENH_NHAN', hoat_dong: true };
+            const account = { ...input, tai_khoan_id: String(accounts.size + 1), vai_tro: 'BENH_NHAN', hoat_dong: true, email_xac_minh_luc:new Date() };
             accounts.set(input.email, account); return account;
         },
         async find_by_email(email) { return accounts.get(email); },

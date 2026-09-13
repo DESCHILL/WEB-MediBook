@@ -46,5 +46,5 @@ try{
     for(let day=2;day<=8;day++){try{await schedule.create(doctor.id,{thu_trong_tuan:day,gio_bat_dau:'08:00',gio_ket_thuc:'17:00'});}catch(error){if(error.code!=='SCHEDULE_OVERLAP')throw error;}}
     const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Ho_Chi_Minh',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
     await schedule.generate(doctor.id,{ngay_bat_dau:today,so_ngay:14});
-    console.log('Đã chuẩn bị ba vai trò demo. Thông tin đăng nhập chỉ lưu trong local_data/demo_accounts.json, được Git bỏ qua.');
+    console.log('Đã chuẩn bị dữ liệu demo. Tài khoản bệnh nhân/bác sĩ dùng example.test chưa xác minh nên không đăng nhập được; cần đăng ký/tạo tài khoản bằng email nhận được thư để thử luồng mới. Thông tin demo chỉ lưu trong local_data/demo_accounts.json.');
 }finally{await database.close_pool();}
