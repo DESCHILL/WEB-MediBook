@@ -9,6 +9,8 @@
     "dev:backend": "npm run dev --workspace backend",
     "build": "npm run build --workspace frontend",
     "test": "npm run test --workspace backend",
-    "check:database": "npm run check:database --workspace backend"
+    "check:database": "npm run check:database --workspace backend",
+    "setup:auth": "node backend/scripts/setup_auth.js",
+    "test:database": "npm run test:database --workspace backend"
   }
 }

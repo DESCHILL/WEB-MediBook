@@ -4,7 +4,7 @@ import { create_database } from './config/database.js';
 
 const config = read_environment();
 const database = create_database(config);
-const app = create_app(database);
+const app = create_app(database, { auth_config: config });
 const server = app.listen(config.port, config.host, () => {
     console.log(`MediBook API: http://${config.host}:${config.port}/api/health`);
 });
