@@ -6,6 +6,10 @@ import {create_schedule_repository} from './repositories/schedule_repository.js'
 import {create_schedule_service} from './services/schedule_service.js';
 import {create_schedule_controller} from './controllers/schedule_controller.js';
 import {create_schedule_routes} from './routes/schedule_routes.js';
+import {create_appointment_repository} from './repositories/appointment_repository.js';
+import {create_appointment_service} from './services/appointment_service.js';
+import {create_appointment_controller} from './controllers/appointment_controller.js';
+import {create_appointment_routes} from './routes/appointment_routes.js';
 import express from 'express';
 import helmet from 'helmet';
 import cookie_parser from 'cookie-parser';
@@ -22,7 +26,7 @@ import { create_health_service } from './services/health_service.js';
 import { create_health_controller } from './controllers/health_controller.js';
 import { create_health_routes } from './routes/health_routes.js';
 
-export function create_app(database, { auth_config = {}, auth_repository, catalog_repository } = {}) {
+export function create_app(database, { auth_config = {}, auth_repository, catalog_repository, appointment_repository } = {}) {
     const app = express();
     app.disable('x-powered-by');
     app.use(helmet());
@@ -34,6 +38,8 @@ export function create_app(database, { auth_config = {}, auth_repository, catalo
     app.use('/api/auth', create_auth_routes(create_auth_controller(auth_service, auth_config), auth_service, auth_config));
 app.use('/api/profile',create_profile_routes(create_profile_controller(create_profile_service(create_profile_repository(database))),auth_service,auth_config));
 app.use('/api/admin/doctors',create_schedule_routes(create_schedule_controller(create_schedule_service(create_schedule_repository(database))),auth_service,auth_config));
+const appointment_service=create_appointment_service(appointment_repository??create_appointment_repository(database));
+app.use('/api',create_appointment_routes(create_appointment_controller(appointment_service),auth_service,auth_config));
     const repository = create_health_repository(database);
     const service = create_health_service(repository);
     const controller = create_health_controller(service);

@@ -11,6 +11,9 @@ export default function auth_page({ registration, auth }) {
     const [fields, set_fields] = use_state({});
     const [notice, set_notice] = use_state('');
     const [pending, set_pending] = use_state(false);
+    const search = new URLSearchParams(window.location.search);
+    const doctor_id = search.get('doctor');
+    const next_path = search.get('next') === 'lich_hen' ? '/lich_hen' : /^[1-9]\d{0,18}$/.test(doctor_id || '') ? `/bac_si/${doctor_id}` : '/tai_khoan';
     async function submit_form(event) {
         event.preventDefault(); if (pending) return;
         set_error(''); set_notice('');
@@ -25,7 +28,7 @@ export default function auth_page({ registration, auth }) {
             const data = await send_auth_request(register ? 'register' : 'login', { email: email.trim(), mat_khau, ...(register ? { ho_ten: ho_ten.trim() } : {}) });
             set_mat_khau('');
             if (register) { window.history.replaceState({}, '', '/dang_nhap'); set_register(false); set_notice(data.message); }
-            else window.location.assign('/tai_khoan');
+            else window.location.assign(next_path);
         } catch (failure) { set_error(failure.message); set_fields(failure.fields ?? {}); }
         finally { set_pending(false); }
     }
