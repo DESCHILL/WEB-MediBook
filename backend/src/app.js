@@ -1,3 +1,7 @@
+import {create_profile_repository} from './repositories/profile_repository.js';
+import {create_profile_service} from './services/profile_service.js';
+import {create_profile_controller} from './controllers/profile_controller.js';
+import {create_profile_routes} from './routes/profile_routes.js';
 import express from 'express';
 import helmet from 'helmet';
 import cookie_parser from 'cookie-parser';
@@ -24,6 +28,7 @@ export function create_app(database, { auth_config = {}, auth_repository, catalo
     app.use('/api', create_catalog_routes(create_catalog_controller(catalog_service)));
     const auth_service = create_auth_service(auth_repository ?? create_auth_repository(database), auth_config);
     app.use('/api/auth', create_auth_routes(create_auth_controller(auth_service, auth_config), auth_service, auth_config));
+app.use('/api/profile',create_profile_routes(create_profile_controller(create_profile_service(create_profile_repository(database))),auth_service,auth_config));
     const repository = create_health_repository(database);
     const service = create_health_service(repository);
     const controller = create_health_controller(service);
