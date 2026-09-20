@@ -200,7 +200,12 @@ a { color: inherit; }
 .admin_form .doctor_field { margin: 3px 0; }.admin_form .doctor_field input,.admin_form .doctor_field select { padding: 8px; }
 @media(max-width:720px) { .doctor_field.ho_ten,.doctor_field.email,.doctor_field.mat_khau,.doctor_field.kinh_nghiem,.doctor_field.phi_kham,.doctor_field.chuyen_khoa,.doctor_field.bang_cap,.doctor_field.dia_chi_kham,.doctor_field.gioi_thieu { grid-area: auto; } }
 .account_menu { position: relative; margin-left: auto; font-size: 13px; }
-.account_menu summary { max-width: 190px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; color: #535d71; padding: 10px; }
+.account_menu summary { list-style: none; }
+.account_menu summary::-webkit-details-marker { display: none; }
+.account_button { display: flex; align-items: center; gap: 8px; border: 0; border-radius: 24px; padding: 11px 20px; background: #6265ff; color: #fff; cursor: pointer; font: inherit; font-size: 11px; line-height: 1; white-space: nowrap; }
+.account_button:hover { background: #5054e7; }
+.account_button span { font-size: 10px; }
 .account_menu>div { position: absolute; z-index: 20; top: 100%; right: 0; min-width: 185px; background: #f8f8fc; border: 1px solid #ececf1; padding: 8px; box-shadow: 0 6px 20px #25254712; }
+.account_menu>div strong { display: block; padding: 8px 10px; color: #252547; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .account_menu a,.account_menu button { display: block; width: 100%; padding: 10px; color: #535d71; text-decoration: none; text-align: left; background: none; border: 0; font: inherit; cursor: pointer; }
 .account_menu a:hover,.account_menu button:hover { background: #ededfa; }
