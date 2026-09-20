@@ -2,6 +2,7 @@ import { use_catalog } from '../hooks/use_catalog.js';
 import Doctor_portrait from '../components/doctor_portrait.jsx';
 import Doctor_card from '../components/doctor_card.jsx';
 import Request_state from '../components/request_state.jsx';
+import Booking_form from '../components/booking_form.jsx';
 
 function related_doctors({ doctor }) {
     const state = use_catalog(`doctors?chuyen_khoa_id=${doctor.chuyen_khoa_id}&page_size=6`);
@@ -13,7 +14,7 @@ function related_doctors({ doctor }) {
 }
 const Related_doctors = related_doctors;
 
-export default function doctor_detail_page({ doctor_id }) {
+export default function doctor_detail_page({ doctor_id, auth }) {
     const state = use_catalog(`doctors/${doctor_id}`);
     const doctor = state.data?.doctor;
     return <main className="public_main doctor_detail_page">
@@ -27,6 +28,6 @@ export default function doctor_detail_page({ doctor_id }) {
                 <p className="doctor_fee">Phí khám: <strong>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(doctor.phi_kham)}</strong></p>
                 <p>Địa chỉ khám: {doctor.dia_chi_kham || 'Đang cập nhật'}</p>
             </div>
-        </section><Related_doctors doctor={doctor} /></>}
+        </section><Booking_form doctor_id={doctor_id} auth={auth} /><Related_doctors doctor={doctor} /></>}
     </main>;
 }
