@@ -10,8 +10,12 @@
     "build": "npm run build --workspace frontend",
     "test": "npm run test --workspace backend",
     "check:database": "npm run check:database --workspace backend",
+    "check:email": "npm run check:email --workspace backend",
+    "setup:email": "npm run setup:email --workspace backend",
     "setup:auth": "node backend/scripts/setup_auth.js",
     "test:database": "npm run test:database --workspace backend",
-    "seed:catalog": "npm run seed:catalog --workspace backend"
+    "seed:catalog": "npm run seed:catalog --workspace backend",
+    "seed:schedules": "npm run seed:schedules --workspace backend",
+    "seed:accounts": "npm run seed:accounts --workspace backend"
   }
 }

@@ -2,6 +2,7 @@ import { auth_error } from './auth_service.js';
 import {parse_resource_id} from './resource_id_service.js';
 function translate_database_error(error) {
     const number = error.number ?? error.originalError?.info?.number;
+    if (number === 51011) throw auth_error(403,'EMAIL_NOT_VERIFIED','Bạn cần xác minh email trước khi đặt khám.');
     if ([51002, 2601, 2627].includes(number)) throw auth_error(409, 'SLOT_UNAVAILABLE', 'Khung giờ vừa được đặt hoặc không còn khả dụng. Vui lòng chọn lại.');
     if ([51001, 51003].includes(number)) throw auth_error(404, 'NOT_FOUND', 'Không tìm thấy dữ liệu thuộc tài khoản của bạn.');
     if (number === 51004) throw auth_error(409, 'CANNOT_CANCEL', 'Chỉ có thể hủy lịch Đã đặt trước giờ bắt đầu.');

@@ -1,3 +1,4 @@
+import {bind_verification,insert_verification_sql} from './email_repository.js';
 export function create_admin_repository(database) {
     async function dashboard() {
         const pool=await database.get_pool();
@@ -34,14 +35,16 @@ export function create_admin_repository(database) {
     }
     async function create_doctor(data) {
         const pool=await database.get_pool();
-        const request=pool.request();for(const [key,value] of Object.entries(data))request.input(key,value);
+        const request=bind_verification(pool.request(),data.verification);for(const [key,value] of Object.entries(data))if(key!=='verification')request.input(key,value);
         return (await request.query(`SET XACT_ABORT ON;
             BEGIN TRY
                 BEGIN TRANSACTION;
                 INSERT dbo.TaiKhoan(email,mat_khau_hash,ho_ten,vai_tro) VALUES(@email,@mat_khau_hash,@ho_ten,'BAC_SI');
                 DECLARE @account bigint=SCOPE_IDENTITY();
                 INSERT dbo.BacSi(tai_khoan_id,chuyen_khoa_id,bang_cap,kinh_nghiem,gioi_thieu,dia_chi_kham,anh_dai_dien,phi_kham) VALUES(@account,@chuyen_khoa_id,@bang_cap,@kinh_nghiem,@gioi_thieu,@dia_chi_kham,@anh_dai_dien,@phi_kham);
-                DECLARE @id bigint=SCOPE_IDENTITY();COMMIT;
+                DECLARE @id bigint=SCOPE_IDENTITY(),@email_account_id bigint=@account;
+                ${insert_verification_sql}
+                COMMIT;
                 SELECT CONVERT(varchar(20),@id) bac_si_id;
             END TRY
             BEGIN CATCH

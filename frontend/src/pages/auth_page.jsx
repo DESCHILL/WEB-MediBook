@@ -44,5 +44,6 @@ export default function auth_page({ registration, auth }) {
             <button className="primary_button" disabled={pending}>{pending ? 'Đang xử lý…' : register ? 'Tạo tài khoản' : 'Đăng nhập'}</button>
         </form>
         {register && <p className="switch_form">Bạn đã có tài khoản? <a href="/dang_nhap">Đăng nhập tại đây</a></p>}
+        {!register && <p className="switch_form">Chưa nhận được email? <a href="/gui_lai_email">Gửi lại email xác minh</a></p>}
     </section></main>;
 }

@@ -1,10 +1,12 @@
 # Kế hoạch triển khai sau ERD
 
+Kế hoạch bàn giao hiện hành là [8 đợt trong release_plan.md](release_plan.md), áp dụng từ khi người dùng yêu cầu issue/branch cho từng chức năng và chỉ push một đợt mỗi lần. Các module trong phạm vi hiện đã có code cục bộ và được kiểm thử; xem continuation_state.md và integration_verification.md để biết trạng thái thực tế. Các mục dưới đây mô tả trình tự nghiệp vụ tổng quát ban đầu.
+
 Căn cứ: PROJECT PROPOSAL hiện tại chọn React, Node.js/Express, SQL Server và JWT; ERD đã được vẽ bằng SSMS và người dùng đã chèn vào báo cáo.
 
 ## 1. Khởi tạo môi trường
 
-Đã hoàn thành khung frontend/backend, kết nối SQL Server, API kiểm tra trạng thái, kiểm thử lỗi kết nối và build frontend. Chưa có màn hình nghiệp vụ hoặc đăng nhập.
+Đã hoàn thành khung frontend/backend, kết nối SQL Server, API kiểm tra trạng thái, kiểm thử lỗi kết nối và build frontend. Đã bổ sung module xác thực và các màn hình tra cứu theo tiến độ hiện hành.
 
 ## 2. Tài khoản và phân quyền
 

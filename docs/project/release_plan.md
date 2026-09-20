@@ -1,17 +1,17 @@
 # Kế hoạch 8 đợt bàn giao
 
-Người dùng yêu cầu tiếp tục toàn bộ đồ án, commit tiếng Việt và chỉ push từng đợt khi được yêu cầu. Mỗi chức năng có một issue trên GitHub. Tạo issue không đồng nghĩa đã push mã nguồn.
+Người dùng yêu cầu tiếp tục toàn bộ đồ án, commit tiếng Việt và chỉ push từng đợt khi được yêu cầu. Giữ nguyên issue #1–#10; các chức năng còn lại theo dõi bằng 7 issue phạm vi #11, #13, #15, #18, #21, #29, #30. Tạo issue không đồng nghĩa đã push mã nguồn.
 
 | Đợt | Phạm vi | Issue | Branch chốt đợt | Trạng thái |
 | --- | --- | --- | --- | --- |
-| 1 | Đăng ký, đăng nhập, tài khoản hiện tại, đăng xuất, phân quyền JWT | #1–#5 | codex/dot_01_xac_thuc | Đã có code cục bộ, chưa push |
-| 2 | Chuyên khoa, bác sĩ, bộ lọc, chi tiết và trang chủ dùng component | #6–#10 | codex/dot_02_tra_cuu | Đang triển khai cục bộ |
-| 3 | Xem và cập nhật hồ sơ bệnh nhân | #11–#12 | codex/dot_03_ho_so | Chưa triển khai |
-| 4 | Lịch làm việc, sinh và tra cứu khung giờ 30 phút | #13–#14 | codex/dot_04_khung_gio | Chưa triển khai |
-| 5 | Đặt lịch, theo dõi lịch và bệnh nhân hủy lịch | #15–#17 | codex/dot_05_lich_hen | Chưa triển khai |
-| 6 | Hai trang bác sĩ và ghi nhận kết quả | #18–#20 | codex/dot_06_bac_si | Chưa triển khai |
-| 7 | Dashboard, bác sĩ, lịch hẹn và chuyên khoa của Admin | #21–#28 | codex/dot_07_quan_tri | Chưa triển khai |
-| 8 | Kiểm thử tích hợp, đóng gói và đồng bộ tài liệu | #29–#30 | codex/dot_08_ban_giao | Chưa triển khai |
+| 1 | Đăng ký, đăng nhập, tài khoản hiện tại, đăng xuất, phân quyền JWT | #1–#5 | codex/dot_01_xac_thuc | Đã hợp nhất PR #31 ngày 13/09/2026 |
+| 2 | Chuyên khoa, bác sĩ, bộ lọc, chi tiết và trang chủ dùng component | #6–#10 | codex/dot_02_tra_cuu | Đã có code cục bộ, chưa push |
+| 3 | Xem và cập nhật hồ sơ bệnh nhân | #11 | codex/dot_03_ho_so | Đã có code cục bộ, chưa push |
+| 4 | Lịch làm việc, sinh và tra cứu khung giờ 30 phút | #13 | codex/dot_04_khung_gio | Đã có code cục bộ, chưa push |
+| 5 | Đặt lịch, theo dõi lịch và bệnh nhân hủy lịch | #15 | codex/dot_05_lich_hen | Đã có code cục bộ, chưa push |
+| 6 | Hai trang bác sĩ và ghi nhận kết quả | #18 | codex/dot_06_bac_si | Đã có code cục bộ, chưa push |
+| 7 | Dashboard, bác sĩ, lịch hẹn và chuyên khoa của Admin | #21 | codex/dot_07_quan_tri | Đã có code cục bộ, chưa push |
+| 8 | Kiểm thử tích hợp, đóng gói và đồng bộ tài liệu | #29–#30 | codex/dot_08_ban_giao | Đã có code cục bộ, chưa push |
 
 ## Cách phát triển
 
@@ -29,10 +29,14 @@ Module xác thực đã được viết trước khi áp dụng quy trình này:
 4. Tạo PR tiếng Việt từ branch chốt đợt vào main; mô tả các issue và bằng chứng kiểm thử. Hợp nhất sau khi kiểm tra xung đột và checks. Giữ các commit tiếng Việt trong lịch sử.
 5. Chỉ đóng issue của đợt đã hợp nhất và cập nhật trạng thái đã phát hành. Dừng sau MỘT đợt; không tự động push tiếp.
 
-Đợt kế tiếp được phép phát hành khi người dùng nói push: **đợt 1**. Hiện chưa có đợt nào trong bảng được push.
+Đợt kế tiếp được phép phát hành khi người dùng nói push: **đợt 2**. Đợt 1 đã hợp nhất vào main qua PR #31; các đợt 2–8 chưa phát hành.
 
 ## Giao diện và dữ liệu
 
 Giữ React/Vite, chia `components`, `pages`, `hooks`, `services`; không đưa mọi màn hình vào app.jsx. React yêu cầu tên component trong JSX bắt đầu bằng chữ hoa: dùng alias khi import, còn tên hàm/file tự viết vẫn snake_case. Giữ header, nền trắng, màu tím, bố cục thẻ và sidebar theo UI/UX.
 
 Dữ liệu demo phải giả lập, có nguồn seed rõ ràng, không đặt mật khẩu đăng nhập mẫu cố định trong repo. Chức năng chưa làm không được hiển thị dữ liệu hay thông báo thành công giả. Tài liệu Word và hướng dẫn đọc code cũ được giữ để đồng bộ ở đợt 8; SRS/API được cập nhật theo từng chức năng ngay khi code.
+
+## Kiểm tra các mốc ngày 13/09/2026
+
+Đã tạo đủ tám branch chốt đợt. Các đợt 2–8 đã chạy test và build riêng thành công. Bản đầy đủ chạy thêm 4 bài kiểm thử SQL, tất cả đạt. Các branch chức năng #11/#13/#15/#18/#21 đã được gắn lại đúng mốc tương ứng; lịch sử phát triển trước khi tách được bảo toàn trong codex/local_history. Chưa có đợt nào được push.

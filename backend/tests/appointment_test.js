@@ -7,7 +7,7 @@ const config = { jwt_secret: 'test_only_secret_with_more_than_32_bytes', app_ori
 function create_fixture(role = 'BENH_NHAN', repository = {}) {
     const token = jwt.sign({}, config.jwt_secret, { subject: '42', jwtid: 'a'.repeat(36), issuer: 'medibook', audience: 'medibook_web', expiresIn: 3600 });
     const app = create_app({}, { auth_config: config, appointment_repository: repository,
-        auth_repository: { find_session: async () => ({ tai_khoan_id: '42', vai_tro: role, hoat_dong: true }) } });
+        auth_repository: { find_session: async () => ({ tai_khoan_id: '42', vai_tro: role, hoat_dong: true, email_xac_minh_luc:new Date() }) } });
     return { app, token };
 }
 test('lịch hẹn yêu cầu JWT, đúng vai trò và luôn dùng ID tài khoản từ phiên', async () => {

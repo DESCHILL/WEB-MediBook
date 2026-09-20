@@ -1,8 +1,10 @@
 import bcrypt from 'bcrypt';
+import {randomBytes as random_bytes} from 'node:crypto';
+import {prepare_email_verification} from './email_content_service.js';
 import {auth_error} from './auth_service.js';
 import {parse_resource_id} from './resource_id_service.js';
 function invalid(message,fields) {return auth_error(400,'INVALID_INPUT',message,fields);}
-export function create_admin_service(repository) {
+export function create_admin_service(repository, config = {}) {
     async function run(action) {
         try{return await action();}catch(error){
             if([2601,2627].includes(error.number))throw auth_error(409,'DUPLICATE','Email hoặc tên chuyên khoa đã tồn tại.');
@@ -19,7 +21,7 @@ export function create_admin_service(repository) {
     async function specialties(){return {items:await repository.specialties()};}
     async function cancel(account_id,id){parse_resource_id(id);await run(()=>repository.cancel(account_id,id));}
     async function create_doctor(body){
-        const keys=['ho_ten','email','mat_khau','chuyen_khoa_id','bang_cap','kinh_nghiem','gioi_thieu','dia_chi_kham','anh_dai_dien','phi_kham'];
+        const keys=['ho_ten','email','chuyen_khoa_id','bang_cap','kinh_nghiem','gioi_thieu','dia_chi_kham','anh_dai_dien','phi_kham'];
         if(!body||Array.isArray(body)||Object.keys(body).some((key)=>!keys.includes(key)))throw invalid('Dữ liệu bác sĩ không hợp lệ.');
         const fields={};
         const limits={ho_ten:150,email:254,bang_cap:250,kinh_nghiem:500,gioi_thieu:4000,dia_chi_kham:500,anh_dai_dien:1000};
@@ -28,13 +30,13 @@ export function create_admin_service(repository) {
         data.email=data.email.toLowerCase();
         if(data.ho_ten.length<2)fields.ho_ten='Vui lòng nhập họ tên.';
         if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email))fields.email='Email không hợp lệ.';
-        if(typeof body.mat_khau!=='string'||body.mat_khau.length<8||Buffer.byteLength(body.mat_khau)>72||body.mat_khau.includes('\0'))fields.mat_khau='Mật khẩu ít nhất 8 ký tự, tối đa 72 byte.';
         if(data.anh_dai_dien&&!/^\/uploads\/[a-f0-9-]+\.(png|jpg)$/.test(data.anh_dai_dien))fields.anh_dai_dien='Vui lòng tải ảnh bằng biểu mẫu.';
         data.phi_kham=Number(body.phi_kham);
         if(!Number.isFinite(data.phi_kham)||data.phi_kham<0||data.phi_kham>9999999999.99)fields.phi_kham='Phí khám không hợp lệ.';
         if(Object.keys(fields).length)throw invalid('Vui lòng kiểm tra thông tin bác sĩ.',fields);
         data.chuyen_khoa_id=parse_resource_id(body.chuyen_khoa_id);
-        data.mat_khau_hash=await bcrypt.hash(body.mat_khau,12);
+        data.mat_khau_hash=await bcrypt.hash(random_bytes(32).toString('hex'),12);
+        data.verification=prepare_email_verification(config,'INVITE_DOCTOR');
         return run(()=>repository.create_doctor(data));
     }
     async function save_specialty(id,body){

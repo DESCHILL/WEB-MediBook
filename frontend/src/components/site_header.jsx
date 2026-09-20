@@ -9,7 +9,7 @@ export default function site_header({ account, loading, path, logout, pending })
             <a href="/bac_si" aria-current={path.startsWith('/bac_si') || path === '/chuyen_khoa' ? 'page' : undefined}>BÁC SĨ VÀ CHUYÊN KHOA</a>
             <a href="/lich_hen" aria-current={path === '/lich_hen' ? 'page' : undefined}>QUẢN LÝ LỊCH HẸN</a>
         </nav>}
-        {account ? <details className="account_menu"><summary aria-label={`Tài khoản ${account.ho_ten}`}>{account.ho_ten} ▾</summary><div><a href="/tai_khoan">Hồ sơ cá nhân</a><a href={account.vai_tro==='ADMIN'?'/quan_tri':account.vai_tro==='BAC_SI'?'/bac_si/lich_hen':'/lich_hen'}>{account.vai_tro==='ADMIN'?'Trang quản trị':'Quản lý lịch hẹn'}</a><button disabled={pending} onClick={logout}>Đăng xuất</button></div></details> :
+        {account ? <details className="account_menu"><summary className="account_button" aria-label={`Tài khoản ${account.ho_ten}`}>Tài khoản <span aria-hidden="true">▾</span></summary><div><strong>{account.ho_ten}</strong><a href="/tai_khoan">Hồ sơ cá nhân</a><a href={account.vai_tro==='ADMIN'?'/quan_tri':account.vai_tro==='BAC_SI'?'/bac_si/lich_hen':'/lich_hen'}>{account.vai_tro==='ADMIN'?'Trang quản trị':'Quản lý lịch hẹn'}</a><button disabled={pending} onClick={logout}>Đăng xuất</button></div></details> :
             <a className="header_button" href="/dang_ky" aria-disabled={loading ? 'true' : undefined}>Tạo tài khoản</a>}
     </header>;
 }
